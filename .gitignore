@@ -1,6 +1,6 @@
 node_modules
 dist
-test/config.ts
+/test/config.ts
 # IntelliJ project files
 .idea
 *.iml

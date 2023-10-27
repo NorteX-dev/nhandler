@@ -1,5 +1,5 @@
 import { ApplicationCommandType } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
 import { Command, CommandExecutionResult, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
 import { BaseHandler } from "./BaseHandler";
@@ -15,6 +15,7 @@ export class CommandHandler extends BaseHandler {
 	registerCommand(command: Command) {
 		if (this.commandExists(command.name)) throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
 		this.debugLog("Registered command", command.name);
+		command.client = this.client;
 		this.commands.push(command);
 	}
 
@@ -34,7 +35,7 @@ export class CommandHandler extends BaseHandler {
 		return undefined;
 	}
 
-	runCommand(event: ChatInputCommandInteraction, metadata?: Record<string, unknown>): void {
+	runCommand(event: ChatInputCommandInteraction, metadata: any = {}): void {
 		const command = this.commands.find((command) => command.name === event.commandName);
 		if (!command) return this.debugLog(`runCommand(): Command ${event.commandName} not found.`);
 		this.debugLog(`Running command ${command.name}.`);
@@ -42,17 +43,43 @@ export class CommandHandler extends BaseHandler {
 		/* Check preconditions, like allowedGuilds, allowedUsers etc. */
 		const error = this.checkConditionals(event, command);
 		if (error) {
-			if (!command.error || typeof command.error !== "function") {
-				return this.debugLog(`runCommand(): Command ${event.commandName} failed conditionals but has no error() method implemented.`);
-			}
-			command.error(event, error);
+			this.callErrorIfPresent(command, event, error);
 			return;
 		}
 
 		if (!command.run || typeof command.run !== "function") {
 			return this.debugLog(`runCommand(): Command ${event.commandName} has no run() method implemented.`);
 		}
-		command.run(event, metadata);
+		const returnedValueOrPromise: Promise<CommandExecutionResult> | CommandExecutionResult = command.run(event, metadata);
+		if (typeof returnedValueOrPromise === "object" && returnedValueOrPromise instanceof Promise) {
+			// The run method returned a promise
+			const returnedPromise = returnedValueOrPromise;
+			returnedPromise.then((returnedValue) => {
+				if (returnedValue instanceof CommandError) this.callErrorIfPresent(command, event, returnedValue);
+			});
+		} else {
+			// The run method returned a value
+			const returnedValue = returnedValueOrPromise;
+			if (returnedValue instanceof CommandError) this.callErrorIfPresent(command, event, returnedValue);
+		}
+	}
+
+	runAutocomplete(event: AutocompleteInteraction, metadata: any = {}): void {
+		const command = this.commands.find((command) => command.name === event.commandName);
+		if (!command) return this.debugLog(`runAutocomplete(): Command ${event.commandName} not found.`);
+		this.debugLog(`Running autocomplete for ${command.name}.`);
+
+		if (!command.autocomplete || typeof command.autocomplete !== "function") {
+			return this.debugLog(`runAutocomplete(): Command ${event.commandName} has no autocomplete() method implemented.`);
+		}
+		command.autocomplete(event, metadata);
+	}
+
+	private callErrorIfPresent(command: Command, event: ChatInputCommandInteraction, error: CommandError) {
+		if (!command.error || typeof command.error !== "function") {
+			return this.debugLog(`Command ${event.commandName} has no error() method implemented.`);
+		}
+		command.error(event, error);
 	}
 
 	checkApplicationReady() {

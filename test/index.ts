@@ -1,10 +1,10 @@
-import { ChatInputCommandInteraction, Client, IntentsBitField } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client, IntentsBitField } from "discord.js";
 
 import { createCommands } from "../src";
 import { token } from "./config";
 import { TestCommand } from "./testCommand";
 
-class MyClient extends Client {
+export class MyClient extends Client {
 	constructor() {
 		super({
 			intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
@@ -18,12 +18,11 @@ class MyClient extends Client {
 		});
 
 		this.on("interactionCreate", (interaction) => {
-			if (!(interaction instanceof ChatInputCommandInteraction)) {
-				return;
+			if (interaction instanceof ChatInputCommandInteraction) {
+				commandHandler.runCommand(interaction);
+			} else if (interaction instanceof AutocompleteInteraction) {
+				commandHandler.runAutocomplete(interaction);
 			}
-			commandHandler.runCommand(interaction, {
-				settings: "Abc",
-			});
 		});
 
 		super.login(token).then((r) => {
@@ -32,7 +31,7 @@ class MyClient extends Client {
 	}
 
 	private createHandler() {
-		const commandHandler = createCommands<typeof this>({ client: this, debug: true });
+		const commandHandler = createCommands<MyClient>({ client: this, debug: true });
 		commandHandler.registerCommand(new TestCommand());
 		return commandHandler;
 	}

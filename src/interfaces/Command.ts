@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction, PermissionsBitField } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client, PermissionsBitField } from "discord.js";
 
 import { CommandError } from "../classes/CommandError";
 
@@ -42,6 +42,10 @@ export type CommandOption = SubcommandWithOptions | ArgumentOption;
 export type CommandExecutionResult = CommandError | void;
 
 export interface Command {
+	/**
+	 * client - the client that the command is registered to
+	 * */
+	client: Client;
 	/**
 	 * name - defines the name of the command
 	 * */
@@ -92,7 +96,7 @@ export interface Command {
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	autocomplete?: (interaction: AutocompleteInteraction) => Promise<void> | void;
+	autocomplete?: (interaction: AutocompleteInteraction, metadata: any) => Promise<void> | void;
 	/**
 	 * this function will be called when an error occurs while executing the command,
 	 * for example an unauthorized user tries to use the command
@@ -109,5 +113,5 @@ export interface Command {
 	 *
 	 * if the command returns a CommandError, this.error will be called, otherwise (in case of returning null) the command will be considered successful
 	 * */
-	run: (interaction: ChatInputCommandInteraction, metadata?: Record<string, unknown>) => Promise<CommandExecutionResult> | CommandExecutionResult;
+	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<CommandExecutionResult> | CommandExecutionResult;
 }

@@ -1,12 +1,20 @@
+import * as console from "console";
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
-import { ChatInputCommandInteraction } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
 import { CommandError } from "../src/classes/CommandError";
 import { Command } from "../src/interfaces/Command";
+import { MyClient } from "./index";
 
 export class TestCommand implements Command {
+	client!: MyClient;
+
 	name = "test";
 	description = "test command";
+	metadata = {
+		category: "test",
+	};
+
 	get options() {
 		return [
 			{
@@ -14,20 +22,31 @@ export class TestCommand implements Command {
 				name: "test3",
 				description: "test3 option",
 				required: true,
+				autocomplete: true,
 			},
 		];
 	}
 
-	error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
-		return undefined;
+	autocomplete(interaction: AutocompleteInteraction): Promise<void> | void {
+		return interaction.respond([
+			{ name: "test1", value: "test1" },
+			{ name: "test2", value: "test2" },
+		]);
 	}
 
-	// TODO : add metadata optional generic type
-	async run<M>(interaction: ChatInputCommandInteraction, metadata: M): Promise<CommandError | void> {
-		const thing = 1;
-		console.log(metadata.settings);
+	error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
+		console.log("error ran");
+		interaction.reply({
+			content: error.message,
+			ephemeral: true,
+		});
+		return;
+	}
 
-		// @ts-expect-error this is a test, this should intentionally always fail or always succeed
+	async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
+		const thing = 2;
+
+		// @ts-ignore this is a test, this should intentionally always fail or always succeed
 		if (thing === 2) {
 			return new CommandError("thing is 2");
 		}
