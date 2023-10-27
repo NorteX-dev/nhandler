@@ -1,0 +1,5 @@
+node_modules
+dist
+test
+test/config.ts
+TODO.md
