@@ -1,10 +1,11 @@
+import * as path from "path";
 import { AutocompleteInteraction, ChatInputCommandInteraction, Client, IntentsBitField } from "discord.js";
 import { config } from "dotenv";
 
 import { createCommands } from "../src";
 import { TestCommand } from "./testCommand";
 
-config();
+config({ path: path.join(__dirname, ".env") });
 export class MyClient extends Client {
 	constructor() {
 		super({
@@ -26,7 +27,7 @@ export class MyClient extends Client {
 			}
 		});
 
-		super.login(process.env.token).then((r) => {
+		super.login(process.env.TOKEN).then((r) => {
 			console.log("logged in");
 		});
 	}
