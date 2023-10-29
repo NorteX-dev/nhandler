@@ -42,33 +42,33 @@ import { ReadyEvent } from "./events/ready";
 
 // Define a class called "MyClient", which extends Discord.js' Client class.
 export class MyClient extends Client {
-	// Define variables to store each of our handlers.
-	static commandHandler: CommandHandler;
-	static eventHandler: EventHandler;
-	static componentHandler: ComponentHandler;
+  // Define variables to store each of our handlers.
+  static commandHandler: CommandHandler;
+  static eventHandler: EventHandler;
+  static componentHandler: ComponentHandler;
 
-	constructor() {
-		super({
-			intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
-		});
+  constructor() {
+    super({
+      intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
+    });
 
-		this.createHandlers();
+    this.createHandlers();
 
-		super.login(process.env.TOKEN).then(() => {
-			console.log("-> Logged in.");
-		});
-	}
+    super.login(process.env.TOKEN).then(() => {
+      console.log("-> Logged in.");
+    });
+  }
 
-	private createHandlers() {
-		// Create each of our handlers using the appropriate create* utility function.
+  private createHandlers() {
+    // Create each of our handlers using the appropriate create* utility function.
     // The create* functions take a generic parameter which decides the type of the client.
     // In the options, define the required `client` property, as well as the optional `debug` property for extended logging.
     // Then, either call `handler.register` or directly chain the `register` method to the `create*` function.
     // Pass an instance of your command into the `register` method.
-		MyClient.commandHandler = createCommands<MyClient>({ client: this, debug: true }).register(new TestCommand());
-		MyClient.eventHandler = createEvents<MyClient>({ client: this }).register(new ReadyEvent());
-		MyClient.componentHandler = createComponents<MyClient>({ client: this }).register(new TestComponent());
-	}
+    MyClient.commandHandler = createCommands<MyClient>({ client: this, debug: true }).register(new TestCommand());
+    MyClient.eventHandler = createEvents<MyClient>({ client: this }).register(new ReadyEvent());
+    MyClient.componentHandler = createComponents<MyClient>({ client: this }).register(new TestComponent());
+  }
 }
 new MyClient();
 ```
@@ -84,43 +84,43 @@ import { MyClient } from "../index";
 
 // Define the TestCommand class. It implements the `Command` interface, which is imported from `nhandler`.
 export class TestCommand implements Command {
-	// Define the required `client` property, which is an instance of your client.
+  // Define the required `client` property, which is an instance of your client.
   // Here, we need to use the ! operator to tell TypeScript that the property is defined, even though it's not assigned in the constructor.
-	client!: MyClient;
+  client!: MyClient;
 
-	// Define command properties. Name and description are required by Discord, however, options is not.
+  // Define command properties. Name and description are required by Discord, however, options is not.
   // Options define the command's subcommands & arguments.
   // Find more command parameters in the full examples in the `examples` folder.
-	name = "test";
-	description = "test command";
-	options = [
-		{
-			type: ApplicationCommandOptionType.String,
-			name: "string-option",
-			description: "Example string option",
-			required: true,
-		},
-	];
+  name = "test";
+  description = "test command";
+  options = [
+    {
+      type: ApplicationCommandOptionType.String,
+      name: "string-option",
+      description: "Example string option",
+      required: true,
+    },
+  ];
 
-	// This is our error method. It will be called when preconditions fail, or when the command returns a CommandError.
+  // This is our error method. It will be called when preconditions fail, or when the command returns a CommandError.
   // The error() method is an excellent way to keep your errors consistent in styling, as well as to shorten your code.
-	error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
-		interaction.reply({ content: "Error: " + error.message, ephemeral: true, });
-		return;
-	}
+  error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
+    interaction.reply({ content: "Error: " + error.message, ephemeral: true, });
+    return;
+  }
 
-	// The run() method will be ran when the command is executed.
+  // The run() method will be ran when the command is executed.
   // It returns a Promise, which can be used to return a CommandError.
   // If you return CommandError, `error()` will be called with the value.
   // If you don't return anything (void), the command will be considered successful.
-	async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
-		if (1 === 2) {
-			// Return a CommandError to call the error() method.
-			return new CommandError("fatal error");
-		}
-		// Successful: reply to the interaction and return nothing.
-		await interaction.reply({ content: "Test command ran!", ephemeral: true });
-	}
+  async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
+    if (1 === 2) {
+      // Return a CommandError to call the error() method.
+      return new CommandError("fatal error");
+    }
+    // Successful: reply to the interaction and return nothing.
+    await interaction.reply({ content: "Test command ran!", ephemeral: true });
+  }
 }
 ```
 
@@ -132,16 +132,16 @@ import { MyClient } from "../index";
 
 // Use the Event handler
 export class InteractionCreate implements Event {
-	client!: MyClient;
-	name = "interactionCreate";
+  client!: MyClient;
+  name = "interactionCreate";
 
-	// You must trigger the runCommand function for commands to work.
+  // You must trigger the runCommand function for commands to work.
   // You can use the built-in util function isCommandInteraction to type-safely check if the interaction is a command.
-	async run(interaction: Interaction) {
-		if (isCommandInteraction(interaction)) {
-			MyClient.commandHandler.runCommand(interaction);
-		}
-	}
+  async run(interaction: Interaction) {
+    if (isCommandInteraction(interaction)) {
+      MyClient.commandHandler.runCommand(interaction);
+    }
+  }
 }
 ```
 
