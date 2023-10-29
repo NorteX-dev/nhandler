@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionType } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
+import { ApplicationCommandOptionType, ButtonStyle } from "discord-api-types/v10";
+import { ActionRowBuilder, AutocompleteInteraction, ButtonBuilder, ChatInputCommandInteraction } from "discord.js";
 
 import { CommandError } from "../../src/classes/CommandError";
 import { Command } from "../../src/interfaces/Command";
@@ -44,7 +44,7 @@ export class TestCommand implements Command {
 	}
 
 	async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
-		const thing = 2;
+		const thing = 1;
 
 		// @ts-ignore this is a test, this should intentionally always fail or always succeed
 		if (thing === 2) {
@@ -53,6 +53,11 @@ export class TestCommand implements Command {
 
 		await interaction.reply({
 			content: "test command ran",
+			components: [
+				new ActionRowBuilder<ButtonBuilder>().addComponents(
+					new ButtonBuilder().setCustomId("test-1").setLabel("test").setStyle(ButtonStyle.Primary),
+				),
+			],
 			ephemeral: true,
 		});
 	}

@@ -2,6 +2,7 @@ import { ApplicationCommandType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
 import { Command, CommandExecutionResult, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
+import { AnyCommandInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
 import { CommandError } from "./CommandError";
 
@@ -20,7 +21,7 @@ export class CommandHandler extends BaseHandler {
 		return this;
 	}
 
-	checkConditionals(event: ChatInputCommandInteraction, command: Command): CommandError | undefined {
+	checkConditionals(event: AnyCommandInteraction, command: Command): CommandError | undefined {
 		if (command.guildId && event.guildId !== command.guildId) {
 			return new CommandError("This command is not available in this guild.");
 		}
@@ -36,7 +37,10 @@ export class CommandHandler extends BaseHandler {
 		return undefined;
 	}
 
-	runCommand(event: ChatInputCommandInteraction, metadata: any = {}): void {
+	runCommand(event: AnyCommandInteraction, metadata: any = {}): void {
+		if (!(event instanceof ChatInputCommandInteraction)) {
+			throw new Error("runCommand() currently only accepts ChatInputCommandInteraction.");
+		}
 		const command = this.commands.find((command) => command.name === event.commandName);
 		if (!command) return this.debugLog(`runCommand(): Command ${event.commandName} not found.`);
 		this.debugLog(`Running command ${command.name}.`);
@@ -138,14 +142,13 @@ export class CommandHandler extends BaseHandler {
 			type: option.type,
 			required: option.required,
 			autocomplete: option.autocomplete,
-			choices:
-				option.choices?.map((choice) => {
-					return {
-						name: choice.name,
-						nameLocalizations: choice.nameLocalizations,
-						value: choice.value,
-					};
-				}) || [],
+			choices: option.choices?.map((choice) => {
+				return {
+					name: choice.name,
+					nameLocalizations: choice.nameLocalizations,
+					value: choice.value,
+				};
+			}),
 		};
 	}
 }

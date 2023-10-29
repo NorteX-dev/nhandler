@@ -1,19 +1,23 @@
 import * as path from "path";
-import { AutocompleteInteraction, ChatInputCommandInteraction, Client, IntentsBitField } from "discord.js";
+import { Client, IntentsBitField } from "discord.js";
 import { config } from "dotenv";
 
 import { createCommands } from "../src";
 import { CommandHandler } from "../src/classes/CommandHandler";
+import { ComponentHandler } from "../src/classes/ComponentHandler";
 import { EventHandler } from "../src/classes/EventHandler";
+import { createComponents } from "../src/functions/createComponents";
 import { createEvents } from "../src/functions/createEvents";
 import { TestCommand } from "./commands/testCommand";
-import { InteractionCreateEvent } from "./events/interactionCreateEvent";
+import { TestComponent } from "./components/testComponent";
+import { InteractionCreate } from "./events/interactionCreate";
 import { ReadyEvent } from "./events/ready";
 
 config({ path: path.join(__dirname, ".env") });
 export class MyClient extends Client {
 	static commandHandler: CommandHandler;
 	static eventHandler: EventHandler;
+	static componentHandler: ComponentHandler;
 
 	constructor() {
 		super({
@@ -23,16 +27,14 @@ export class MyClient extends Client {
 		this.createHandlers();
 
 		super.login(process.env.TOKEN).then(() => {
-			console.log("logged in");
+			console.log("-> Logged in.");
 		});
 	}
 
 	private createHandlers() {
-		MyClient.commandHandler = createCommands<MyClient>({ client: this, debug: true });
-		MyClient.commandHandler.register(new TestCommand());
-		MyClient.eventHandler = createEvents<MyClient>({ client: this, debug: true });
-		MyClient.eventHandler.register(new ReadyEvent());
-		MyClient.eventHandler.register(new InteractionCreateEvent());
+		MyClient.commandHandler = createCommands<MyClient>({ client: this, debug: true }).register(new TestCommand());
+		MyClient.eventHandler = createEvents<MyClient>({ client: this, debug: true }).register(new ReadyEvent()).register(new InteractionCreate());
+		MyClient.componentHandler = createComponents<MyClient>({ client: this, debug: true }).register(new TestComponent());
 	}
 }
 
