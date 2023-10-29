@@ -1,1 +1,0 @@
-export const token = "ODYyNDExODMxMTMzOTk1MDI5.GSwXD2.M8ReKU5Zpu1GrYYQ1YUvWwCjLT4FN6leDXpLA0";

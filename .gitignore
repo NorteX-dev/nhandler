@@ -1,9 +1,8 @@
 node_modules
 dist
-/test/config.ts
-# IntelliJ project files
 .idea
 *.iml
 out
 gen
 TODO.md
+test/.env
