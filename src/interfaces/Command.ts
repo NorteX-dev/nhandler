@@ -109,9 +109,9 @@ export interface Command {
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *
-	 * this method should return a Promise<CommandError | null> or a Command | null.
+	 * this method should return a Promise<CommandError | null>.
 	 *
-	 * if the command returns a CommandError, this.error will be called, otherwise (in case of returning null) the command will be considered successful
+	 * if the command throws a CommandError, this.error will be called, otherwise (in case of returning null) the command will be considered successful
 	 * */
-	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<CommandExecutionResult> | CommandExecutionResult;
+	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<CommandExecutionResult>;
 }

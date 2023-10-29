@@ -1,4 +1,3 @@
-import * as console from "console";
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
@@ -14,18 +13,15 @@ export class TestCommand implements Command {
 	metadata = {
 		category: "test",
 	};
-
-	get options() {
-		return [
-			{
-				type: ApplicationCommandOptionType.String,
-				name: "test3",
-				description: "test3 option",
-				required: true,
-				autocomplete: true,
-			},
-		];
-	}
+	options = [
+		{
+			type: ApplicationCommandOptionType.String,
+			name: "test3",
+			description: "test3 option",
+			required: true,
+			autocomplete: true,
+		},
+	];
 
 	autocomplete(interaction: AutocompleteInteraction): Promise<void> | void {
 		return interaction.respond([
@@ -35,9 +31,8 @@ export class TestCommand implements Command {
 	}
 
 	error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
-		console.log("error ran");
 		interaction.reply({
-			content: error.message,
+			content: "Error: " + error.message,
 			ephemeral: true,
 		});
 		return;
