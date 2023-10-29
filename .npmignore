@@ -2,3 +2,6 @@ node_modules
 test
 src
 TODO.md
+.idea
+prettier.config.cjs
+tsconfig.json
