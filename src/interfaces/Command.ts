@@ -1,7 +1,7 @@
 import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction, Client, PermissionsBitField } from "discord.js";
 
-import { CommandError } from "../classes/CommandError";
+import { CommandError } from "../errors/CommandError";
 
 type SubcommandOptionTypesUnion = ApplicationCommandOptionType.Subcommand | ApplicationCommandOptionType.SubcommandGroup;
 type NormalOptionTypesUnion =

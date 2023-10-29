@@ -4,4 +4,4 @@
 [x] Add custom metadata parameter to run() ~~using generics~~.
 [ ] Test DM checks
 [ ] Test allowed guilds & users setting
-[ ] Test components
+[x] Test components

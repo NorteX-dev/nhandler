@@ -1,7 +1,6 @@
 import { Interaction } from "discord.js";
 
-import { Event } from "../../src/interfaces/Event";
-import { isAutocompleteInteraction, isCommandInteraction, isComponentInteraction } from "../../src/util";
+import { Event, isAutocompleteInteraction, isCommandInteraction, isComponentInteraction } from "../../out";
 import { MyClient } from "../index";
 
 export class InteractionCreate implements Event {

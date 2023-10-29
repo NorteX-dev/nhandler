@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 
-import { ComponentError } from "../classes/ComponentError";
+import { ComponentError } from "../errors/ComponentError";
 import { AnyComponentInteraction } from "../util";
 
 export type ComponentExecutionError = ComponentError | void;

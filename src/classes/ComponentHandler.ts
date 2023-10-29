@@ -1,8 +1,8 @@
+import { CommandError } from "../errors/CommandError";
+import { ComponentError } from "../errors/ComponentError";
 import { Component, ComponentExecutionError } from "../interfaces/Component";
 import { AnyComponentInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
-import { CommandError } from "./CommandError";
-import { ComponentError } from "./ComponentError";
 
 export class ComponentHandler extends BaseHandler {
 	components: Component[] = [];

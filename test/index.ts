@@ -2,12 +2,7 @@ import * as path from "path";
 import { Client, IntentsBitField } from "discord.js";
 import { config } from "dotenv";
 
-import { createCommands } from "../src";
-import { CommandHandler } from "../src/classes/CommandHandler";
-import { ComponentHandler } from "../src/classes/ComponentHandler";
-import { EventHandler } from "../src/classes/EventHandler";
-import { createComponents } from "../src/functions/createComponents";
-import { createEvents } from "../src/functions/createEvents";
+import { CommandHandler, ComponentHandler, createCommands, createComponents, createEvents, EventHandler } from "../src";
 import { TestCommand } from "./commands/testCommand";
 import { TestComponent } from "./components/testComponent";
 import { InteractionCreate } from "./events/interactionCreate";

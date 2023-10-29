@@ -1,10 +1,10 @@
 import { ApplicationCommandType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
+import { CommandError } from "../errors/CommandError";
 import { Command, CommandExecutionResult, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
 import { AnyCommandInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
-import { CommandError } from "./CommandError";
 
 export class CommandHandler extends BaseHandler {
 	commands: Command[] = [];
@@ -18,6 +18,7 @@ export class CommandHandler extends BaseHandler {
 		this.debugLog(`Registered command ${command.name}.`);
 		command.client = this.client;
 		this.commands.push(command);
+		this.emit("commandRegistered", command);
 		return this;
 	}
 

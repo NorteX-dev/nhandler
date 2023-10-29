@@ -1,8 +1,7 @@
 import { ApplicationCommandOptionType, ButtonStyle } from "discord-api-types/v10";
 import { ActionRowBuilder, AutocompleteInteraction, ButtonBuilder, ChatInputCommandInteraction } from "discord.js";
 
-import { CommandError } from "../../src/classes/CommandError";
-import { Command } from "../../src/interfaces/Command";
+import { Command, CommandError } from "../../out";
 import { MyClient } from "../index";
 
 export class TestCommand implements Command {

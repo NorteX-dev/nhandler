@@ -9,6 +9,6 @@
 		"experimentalDecorators": true
 	},
 	"include": ["src", "test"],
-	"exclude": ["node_modules", "**/__tests__/*"],
+	"exclude": ["node_modules", "**/__tests__/*", "test"],
 	"declaration": "true"
 }

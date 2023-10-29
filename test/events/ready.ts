@@ -1,4 +1,4 @@
-import { Event } from "../../src/interfaces/Event";
+import { Event } from "../../out";
 import { MyClient } from "../index";
 
 export class ReadyEvent implements Event {
