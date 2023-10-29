@@ -15,27 +15,32 @@ type NormalOptionTypesUnion =
 	| ApplicationCommandOptionType.Number
 	| ApplicationCommandOptionType.Attachment;
 
-// SubcommandWithOptions is a subcommand or subcommand group and takes optional options
+// SubcommandWithOptions is a subcommand or subcommand group and takes optional `options`
 export type SubcommandWithOptions = {
 	name: string;
+	nameLocalizations?: LocalizationMap;
 	description: string;
 	descriptionLocalizations?: LocalizationMap;
 	type: SubcommandOptionTypesUnion;
 	options?: CommandOption[];
 };
-// ArgumentOption is a normal option (ref. NormalOptionTypes) and does not require options
+
+export type Choice = {
+	name: string;
+	nameLocalizations?: LocalizationMap;
+	value: string;
+};
+
+// ArgumentOption is a normal option (ref. NormalOptionTypes) and does not take `options` as a property
 export type ArgumentOption = {
 	name: string;
+	nameLocalizations?: LocalizationMap;
 	description: string;
 	descriptionLocalizations?: LocalizationMap;
 	type: NormalOptionTypesUnion;
 	required?: boolean;
 	autocomplete?: boolean;
-	choices?: {
-		name: string;
-		nameLocalizations?: LocalizationMap;
-		value: string;
-	}[];
+	choices?: Choice[];
 };
 export type CommandOption = SubcommandWithOptions | ArgumentOption;
 

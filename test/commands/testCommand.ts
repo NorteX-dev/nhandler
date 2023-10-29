@@ -1,15 +1,21 @@
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
-import { CommandError } from "../src/classes/CommandError";
-import { Command } from "../src/interfaces/Command";
-import { MyClient } from "./index";
+import { CommandError } from "../../src/classes/CommandError";
+import { Command } from "../../src/interfaces/Command";
+import { MyClient } from "../index";
 
 export class TestCommand implements Command {
 	client!: MyClient;
 
 	name = "test";
+	nameLocalizations = {
+		pl: "testowa",
+	};
 	description = "test command";
+	descriptionLocalizations = {
+		pl: "testowa komenda",
+	};
 	metadata = {
 		category: "test",
 	};
@@ -19,7 +25,6 @@ export class TestCommand implements Command {
 			name: "test3",
 			description: "test3 option",
 			required: true,
-			autocomplete: true,
 		},
 	];
 

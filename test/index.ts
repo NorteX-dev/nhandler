@@ -3,39 +3,36 @@ import { AutocompleteInteraction, ChatInputCommandInteraction, Client, IntentsBi
 import { config } from "dotenv";
 
 import { createCommands } from "../src";
-import { TestCommand } from "./testCommand";
+import { CommandHandler } from "../src/classes/CommandHandler";
+import { EventHandler } from "../src/classes/EventHandler";
+import { createEvents } from "../src/functions/createEvents";
+import { TestCommand } from "./commands/testCommand";
+import { InteractionCreateEvent } from "./events/interactionCreateEvent";
+import { ReadyEvent } from "./events/ready";
 
 config({ path: path.join(__dirname, ".env") });
 export class MyClient extends Client {
+	static commandHandler: CommandHandler;
+	static eventHandler: EventHandler;
+
 	constructor() {
 		super({
 			intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
 		});
 
-		const commandHandler = this.createHandler();
+		this.createHandlers();
 
-		this.on("ready", () => {
-			console.log("ready");
-			commandHandler.updateApplicationCommands();
-		});
-
-		this.on("interactionCreate", (interaction) => {
-			if (interaction instanceof ChatInputCommandInteraction) {
-				commandHandler.runCommand(interaction);
-			} else if (interaction instanceof AutocompleteInteraction) {
-				commandHandler.runAutocomplete(interaction);
-			}
-		});
-
-		super.login(process.env.TOKEN).then((r) => {
+		super.login(process.env.TOKEN).then(() => {
 			console.log("logged in");
 		});
 	}
 
-	private createHandler() {
-		const commandHandler = createCommands<MyClient>({ client: this, debug: true });
-		commandHandler.registerCommand(new TestCommand());
-		return commandHandler;
+	private createHandlers() {
+		MyClient.commandHandler = createCommands<MyClient>({ client: this, debug: true });
+		MyClient.commandHandler.register(new TestCommand());
+		MyClient.eventHandler = createEvents<MyClient>({ client: this, debug: true });
+		MyClient.eventHandler.register(new ReadyEvent());
+		MyClient.eventHandler.register(new InteractionCreateEvent());
 	}
 }
 

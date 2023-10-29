@@ -12,9 +12,9 @@ export class CommandHandler extends BaseHandler {
 		return this.commands.some((command) => command.name === name);
 	}
 
-	registerCommand(command: Command): CommandHandler {
+	register(command: Command): CommandHandler {
 		if (this.commandExists(command.name)) throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
-		this.debugLog("Registered command", command.name);
+		this.debugLog(`Registered command ${command.name}.`);
 		command.client = this.client;
 		this.commands.push(command);
 		return this;
@@ -132,6 +132,7 @@ export class CommandHandler extends BaseHandler {
 		// Format argument option
 		return {
 			name: option.name,
+			nameLocalizations: option.nameLocalizations,
 			description: option.description,
 			descriptionLocalizations: option.descriptionLocalizations,
 			type: option.type,
