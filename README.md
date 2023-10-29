@@ -122,5 +122,26 @@ export class TestCommand implements Command {
 }
 ```
 
+```ts
+import { Interaction } from "discord.js";
+
+import { Event, isCommandInteraction } from "nhandler";
+import { MyClient } from "../index";
+
+// Use the Event handler
+export class InteractionCreate implements Event {
+	client!: MyClient;
+	name = "interactionCreate";
+
+	// You must trigger the runCommand function for commands to work.
+  // You can use the built-in util function isCommandInteraction to type-safely check if the interaction is a command.
+	async run(interaction: Interaction) {
+		if (isCommandInteraction(interaction)) {
+			MyClient.commandHandler.runCommand(interaction);
+		}
+	}
+}
+```
+
 For a full example, take a look at the `examples` folder in our [GitHub repository](https://github.com/nortex-dev/nhandler).
 
