@@ -99,7 +99,9 @@ export class CommandHandler extends BaseHandler {
 		const commands = this.commands.map(CommandHandler.commandMapper);
 		this.client
 			.application!.commands.set(commands as any)
-			.then((resp) => this.debugLog(`Updated ${resp.size} commands.`))
+			.then((resp) => {
+				this.debugLog(`Updated ${resp.size} commands.`);
+			})
 			.catch((err) => {
 				throw err;
 			});
@@ -116,7 +118,7 @@ export class CommandHandler extends BaseHandler {
 			guildId: command.guildId,
 			nameLocalizations: command.nameLocalizations,
 			dmPermission: command.allowDm,
-			defaultMemberPermissions: command.defaultMemberPermissions,
+			defaultMemberPermissions: command.defaultMemberPermissions ?? null,
 			description: command.description,
 			descriptionLocalizations: command.descriptionLocalizations,
 			options: command.options?.map(CommandHandler.optionsMapper),
