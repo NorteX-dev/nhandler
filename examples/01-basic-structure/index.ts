@@ -3,7 +3,7 @@ import { Client, IntentsBitField } from "discord.js";
 import { config } from "dotenv";
 import { CommandHandler, ComponentHandler, createCommands, createComponents, createEvents, EventHandler } from "nhandler";
 
-import { PingCommand } from "./commands/pingCommand";
+import { PingCommand } from "./commands/ping";
 import { TestButtonPress } from "./components/testButtonPress";
 import { InteractionCreateEvent } from "./events/interactionCreate";
 import { ReadyEvent } from "./events/ready";
