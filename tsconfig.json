@@ -5,8 +5,7 @@
 		"declaration": true,
 		"outDir": "./out",
 		"strict": true,
-		"lib": ["dom", "es5", "scripthost"],
-		"experimentalDecorators": true
+		"lib": ["dom", "es5", "scripthost"]
 	},
 	"include": ["src", "test"],
 	"exclude": ["node_modules", "**/__tests__/*", "test"],

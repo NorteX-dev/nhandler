@@ -5,7 +5,7 @@ module.exports = {
 	singleQuote: false,
 	useTabs: true,
 	tabWidth: 4,
-	printWidth: 150,
+	printWidth: 120,
 	overrides: [
 		{
 			files: "*.yml",

@@ -1,0 +1,16 @@
+{
+	"name": "01-basic-structure",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "ts-node index.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^14.13.0",
+		"nhandler": "^2.0.5"
+	}
+}
