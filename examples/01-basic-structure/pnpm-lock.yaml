@@ -12,8 +12,8 @@ dependencies:
     specifier: ^16.3.1
     version: 16.3.1
   nhandler:
-    specifier: ^2.0.5
-    version: 2.0.5
+    specifier: ^2.0.7
+    version: 2.0.7
 
 packages:
 
@@ -170,8 +170,8 @@ packages:
     resolution: {integrity: sha512-wJkXvutRbNWcc37tt5j1HyOK1nosspdh3dj6LUYYAvF6JYNqs53IfRvK9oEpcwiDA1NdoIi64yAMfdivPeVAyw==}
     dev: false
 
-  /nhandler@2.0.5:
-    resolution: {integrity: sha512-rLs4NMPh0GgKvZVhFP4JcENPo8d0VWVFDnbWKYhf5abtu9/vWWDDYX0khM4KFeA680VHjCcJMJchUxq1xW5ntg==}
+  /nhandler@2.0.7:
+    resolution: {integrity: sha512-5dVAv9oxmot2cOU0R9g6NK1c2eFn9KX/GWzbTnQ/vpgxSzW1kuuof7iKdkGHJlg4+SXwff+2uiie+u4Pn5QEww==}
     dependencies:
       discord.js: 14.13.0
     transitivePeerDependencies:
