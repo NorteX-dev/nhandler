@@ -8,6 +8,5 @@
 		"lib": ["dom", "es5", "scripthost"]
 	},
 	"include": ["src", "test"],
-	"exclude": ["node_modules", "**/__tests__/*", "test"],
-	"declaration": "true"
+	"exclude": ["node_modules", "**/__tests__/*", "examples"]
 }
