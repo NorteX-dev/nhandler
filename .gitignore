@@ -8,3 +8,4 @@ TODO.md
 examples/**/.env
 examples/**/node_modules
 docs/node_modules
+examples/test

@@ -88,9 +88,9 @@ export interface Command {
 	 * */
 	allowedUsers?: string[];
 	/**
-	 * defaultMemberPermissions - a permissions bitfield ([PermissionsBitField](https://old.discordjs.dev/#/docs/discord.js/main/class/PermissionsBitField)) that defines the default permissions for the command
+	 * defaultMemberPermissions - a permissions bitfield ([PermissionsBitField](https://old.discordjs.dev/#/docs/discord.js/main/class/PermissionsBitField)) written in bigint, that defines the default permissions for the command
 	 * */
-	defaultMemberPermissions?: PermissionsBitField;
+	defaultMemberPermissions?: bigint;
 	/**
 	 * metadata - miscellaneous data for the command, for example category
 	 * */
