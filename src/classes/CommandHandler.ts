@@ -1,3 +1,5 @@
+import { readdirSync, statSync } from "fs";
+import * as path from "path";
 import { ApplicationCommandType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
@@ -14,11 +16,45 @@ export class CommandHandler extends BaseHandler {
 	}
 
 	register(command: Command): CommandHandler {
-		if (this.commandExists(command.name)) throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
+		if (this.commandExists(command.name))
+			throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
 		this.debugLog(`Registered command ${command.name}.`);
 		command.client = this.client;
 		this.commands.push(command);
 		this.emit("commandRegistered", command);
+		return this;
+	}
+
+	/**
+	 * registerFromDir automatically loads files & creates class instances in the directory specified.
+	 * If recurse is true, it will also load commands from subdirectories.
+	 * Auto-load commands need to have a __default__ export. Otherwise they will be ignored.
+	 * @param dir The directory to load files from.
+	 * @param recurse Whether to load files from subdirectories.
+	 * */
+	public registerFromDir(dir: string, recurse: boolean = true): CommandHandler {
+		if (!this.client) throw new Error("Client not set.");
+		this.debugLog("Loading commands from directory " + dir + ".");
+		const filesInDirectory = readdirSync(dir);
+		for (const file of filesInDirectory) {
+			const absolutePath = path.join(dir, file);
+			if (recurse && statSync(absolutePath).isDirectory()) {
+				this.registerFromDir(absolutePath);
+			} else if (file.endsWith(".js") || file.endsWith(".ts")) {
+				delete require.cache[require.resolve(absolutePath)];
+				const defaultExport = require(absolutePath).default;
+				if (!defaultExport) {
+					this.debugLog(`File ${absolutePath} does not default-export a class. Ignoring.`);
+					continue;
+				}
+				const instance = new defaultExport(this.client);
+				if (!CommandHandler.isInstanceOfCommand(instance)) {
+					this.debugLog(`File ${absolutePath} does not correctly implement Command.`);
+					continue;
+				}
+				this.register(instance);
+			}
+		}
 		return this;
 	}
 
@@ -74,7 +110,9 @@ export class CommandHandler extends BaseHandler {
 		this.debugLog(`Running autocomplete for ${command.name}.`);
 
 		if (!command.autocomplete || typeof command.autocomplete !== "function") {
-			return this.debugLog(`runAutocomplete(): Command ${event.commandName} has no autocomplete() method implemented.`);
+			return this.debugLog(
+				`runAutocomplete(): Command ${event.commandName} has no autocomplete() method implemented.`,
+			);
 		}
 		command.autocomplete(event, metadata);
 	}
@@ -88,7 +126,9 @@ export class CommandHandler extends BaseHandler {
 
 	checkApplicationReady(): void {
 		if (!this.client.application) {
-			throw new Error("Application is not ready. Update application commands after the client has emitted 'ready'.");
+			throw new Error(
+				"Application is not ready. Update application commands after the client has emitted 'ready'.",
+			);
 		}
 	}
 
@@ -109,6 +149,10 @@ export class CommandHandler extends BaseHandler {
 
 	private static isOptionInstanceOfSubcommand(object: any): object is SubcommandWithOptions {
 		return object.options !== undefined;
+	}
+
+	private static isInstanceOfCommand(object: any): object is Command {
+		return object.name !== undefined && object.run !== undefined && object.description !== undefined;
 	}
 
 	private static commandMapper(command: Command) {

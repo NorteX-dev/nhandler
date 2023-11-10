@@ -5,16 +5,16 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'NHandler',
 			social: {
-				github: 'https://github.com/withastro/starlight',
+				github: 'https://github.com/nortex-dev/nhandler',
 			},
 			sidebar: [
 				{
 					label: 'Guides',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', link: '/guides/example/' },
+						{ label: 'Get Started', link: '/guides/get-started/' },
 					],
 				},
 				{
