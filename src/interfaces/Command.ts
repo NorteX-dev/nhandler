@@ -1,9 +1,11 @@
 import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction, Client, PermissionsBitField } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client } from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
 
-type SubcommandOptionTypesUnion = ApplicationCommandOptionType.Subcommand | ApplicationCommandOptionType.SubcommandGroup;
+type SubcommandOptionTypesUnion =
+	| ApplicationCommandOptionType.Subcommand
+	| ApplicationCommandOptionType.SubcommandGroup;
 type NormalOptionTypesUnion =
 	| ApplicationCommandOptionType.String
 	| ApplicationCommandOptionType.Integer
@@ -43,8 +45,6 @@ export type ArgumentOption = {
 	choices?: Choice[];
 };
 export type CommandOption = SubcommandWithOptions | ArgumentOption;
-
-export type CommandExecutionResult = CommandError | void;
 
 export interface Command {
 	/**
@@ -118,5 +118,5 @@ export interface Command {
 	 *
 	 * if the command throws a CommandError, this.error will be called, otherwise (in case of returning null) the command will be considered successful
 	 * */
-	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<CommandExecutionResult>;
+	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<void>;
 }

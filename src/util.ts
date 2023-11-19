@@ -12,7 +12,10 @@ import {
 	UserSelectMenuInteraction,
 } from "discord.js";
 
-export type AnyCommandInteraction = ChatInputCommandInteraction | UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
+export type AnyCommandInteraction =
+	| ChatInputCommandInteraction
+	| UserContextMenuCommandInteraction
+	| MessageContextMenuCommandInteraction;
 
 export type AnyComponentInteraction =
 	| ButtonInteraction

@@ -4,7 +4,7 @@ import { ApplicationCommandType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
-import { Command, CommandExecutionResult, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
+import { Command, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
 import { AnyCommandInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
 
@@ -92,15 +92,16 @@ export class CommandHandler extends BaseHandler {
 		if (!command.run || typeof command.run !== "function") {
 			return this.debugLog(`runCommand(): Command ${event.commandName} has no run() method implemented.`);
 		}
-		const promise: Promise<CommandExecutionResult> | CommandExecutionResult = command.run(event, metadata);
+		const promise: Promise<void> = command.run(event, metadata);
 		if (!(typeof promise === "object" && promise instanceof Promise)) {
 			throw new Error("Command run method must return a promise.");
 		}
 
-		promise.then((cmdExecResult) => {
-			if (cmdExecResult instanceof CommandError) {
-				this.callErrorIfPresent(command, event, cmdExecResult);
+		promise.catch((cmdError) => {
+			if (!(cmdError instanceof CommandError)) {
+				throw cmdError;
 			}
+			this.callErrorIfPresent(command, event, cmdError);
 		});
 	}
 

@@ -115,8 +115,8 @@ export class TestCommand implements Command {
   // If you don't return anything (void), the command will be considered successful.
   async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
     if (1 === 2) {
-      // Return a CommandError to call the error() method.
-      return new CommandError("fatal error");
+      // Throw a CommandError to call the error() method.
+      throw new CommandError("fatal error");
     }
     // Successful: reply to the interaction and return nothing.
     await interaction.reply({ content: "Test command ran!", ephemeral: true });

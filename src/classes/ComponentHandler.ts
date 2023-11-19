@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { CommandError } from "../errors/CommandError";
 import { ComponentError } from "../errors/ComponentError";
-import { Component, ComponentExecutionError } from "../interfaces/Component";
+import { Component } from "../interfaces/Component";
 import { AnyComponentInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
 
@@ -72,15 +72,16 @@ export class ComponentHandler extends BaseHandler {
 		if (!component.run || typeof component.run !== "function") {
 			return this.debugLog(`runComponent(): Component ${event.customId} has no run() method implemented.`);
 		}
-		const promise: Promise<ComponentExecutionError> | ComponentExecutionError = component.run(event, metadata);
+		const promise: Promise<void> = component.run(event, metadata);
 		if (!(typeof promise === "object" && promise instanceof Promise)) {
 			throw new Error("Component run method must return a promise.");
 		}
 
-		promise.then((cmpExecResult) => {
-			if (cmpExecResult instanceof ComponentError) {
-				this.callErrorIfPresent(component, event, cmpExecResult);
+		promise.catch((cmpError) => {
+			if (!(cmpError instanceof CommandError)) {
+				throw cmpError;
 			}
+			this.callErrorIfPresent(component, event, cmpError);
 		});
 	}
 

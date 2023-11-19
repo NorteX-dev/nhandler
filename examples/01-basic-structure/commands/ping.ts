@@ -29,8 +29,9 @@ export class PingCommand implements Command {
 
 		// @ts-expect-error
 		if (thing === 2) {
-			// You can return an instance of CommandError. If you do, `error()` will be called with the error.
-			return new CommandError("thing is 2");
+			// You can throw a CommandError. If you do, the exception will be caught & `error()` will be called.
+			// If you throw anything else than CommandError, the exception will be thrown as normal.
+			throw new CommandError("thing is 2");
 		}
 
 		await interaction.reply({
@@ -44,5 +45,6 @@ export class PingCommand implements Command {
 			ephemeral: true,
 		});
 		// If the interaction is successful, return nothing.
+		// void undefined;
 	}
 }

@@ -3,8 +3,6 @@ import { Client } from "discord.js";
 import { ComponentError } from "../errors/ComponentError";
 import { AnyComponentInteraction } from "../util";
 
-export type ComponentExecutionError = ComponentError | void;
-
 export interface Component {
 	/**
 	 * client - the client that the command is registered to
@@ -39,7 +37,7 @@ export interface Component {
 	 * this function will be called when an error occurs while executing the command,
 	 * for example an unauthorized user tries to use the command
 	 *
-	 * this will also be called if run() returns a CommandError
+	 * this will also be called if run() throws a CommandError
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
@@ -51,5 +49,5 @@ export interface Component {
 	 *
 	 * if the command throws a ComponentError, this.error will be called, otherwise (in case of returning null) the component execution will be considered successful
 	 * */
-	run: (interaction: AnyComponentInteraction, metadata: any) => Promise<ComponentExecutionError>;
+	run: (interaction: AnyComponentInteraction, metadata: any) => Promise<void>;
 }
