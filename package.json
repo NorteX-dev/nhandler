@@ -1,6 +1,6 @@
 {
 	"name": "nhandler",
-	"version": "2.2.0-alpha.0",
+	"version": "2.2.0-alpha.3",
 	"description": "The easy to use, all-in-one command, event and component handler.",
 	"main": "out/index.js",
 	"module": "out/esm/index.js",
@@ -27,6 +27,6 @@
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
-		"discord.js": "^14.14.1"
+		"discord.js": "^14.13.0"
 	}
 }

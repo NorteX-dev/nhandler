@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   discord.js:
-    specifier: ^14.14.1
+    specifier: ^14.13.0
     version: 14.14.1
 
 devDependencies:
