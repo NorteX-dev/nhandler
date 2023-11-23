@@ -78,7 +78,7 @@ export class ComponentHandler extends BaseHandler {
 		}
 
 		promise.catch((cmpError) => {
-			if (!(cmpError instanceof CommandError)) {
+			if (!(cmpError instanceof ComponentError)) {
 				throw cmpError;
 			}
 			this.callErrorIfPresent(component, event, cmpError);
