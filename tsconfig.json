@@ -3,7 +3,7 @@
 		"target": "es2020",
 		"module": "commonjs",
 		"declaration": true,
-		"outDir": "./out",
+		"outDir": "./lib",
 		"strict": true,
 		"lib": ["dom", "es5", "scripthost"]
 	},

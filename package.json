@@ -1,11 +1,13 @@
 {
 	"name": "nhandler",
-	"version": "2.2.0-alpha.4",
+	"version": "2.2.0-alpha.5",
 	"description": "The easy to use, all-in-one command, event and component handler.",
-	"main": "out/index.js",
-	"module": "out/esm/index.js",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
 	"scripts": {
-		"test": "nodemon test/index.ts"
+		"test": "nodemon test/index.ts",
+		"build": "tsc",
+		"publish": "npm run build && npm publish"
 	},
 	"repository": "https://github.com/NorteX-dev/nhandler",
 	"keywords": [
@@ -18,7 +20,6 @@
 	],
 	"author": "NorteX",
 	"license": "ISC",
-	"types": "out/index.d.ts",
 	"devDependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "^4.1.1",
 		"discord-api-types": "^0.37.63",
