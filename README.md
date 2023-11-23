@@ -3,7 +3,7 @@
 # Nhandler v2 (beta)
 NHandler is an opinionated framework to help you with development of advanced Discord bots using discord.js.
 
-It supports the latest Discord.js version v14.13.0 and TypeScript v5.2.
+It supports the latest Discord.js version v14.14.1 and TypeScript v5.3.2.
 
 ### Main features
 - Fully TypeScript based.
@@ -13,8 +13,8 @@ It supports the latest Discord.js version v14.13.0 and TypeScript v5.2.
 
 ### Prerequisites
 - Node.js v16 or newer,
-- Discord.js v14,
-- Any decently modern version of TypeScript.
+- Discord.js v14.14.1,
+- TypeScript v5.3.*.
 
 This handler won't work with non-TS projects, as it relies on implementing interfaces. However, we're planning to add support (through alternative ways) when out of beta.
 

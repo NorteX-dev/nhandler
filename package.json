@@ -7,7 +7,8 @@
 	"scripts": {
 		"test": "nodemon test/index.ts",
 		"build": "tsc",
-		"publish": "npm run build && npm publish"
+		"pub": "npm run build && npm publish",
+		"pub:dev": "npm run build && npm publish --tag \"dev\""
 	},
 	"repository": "https://github.com/NorteX-dev/nhandler",
 	"keywords": [
@@ -25,9 +26,9 @@
 		"discord-api-types": "^0.37.63",
 		"dotenv": "^10.0.0",
 		"prettier": "^3.0.3",
-		"typescript": "^5.2.2"
+		"typescript": "^5.3.2"
 	},
 	"dependencies": {
-		"discord.js": "^14.13.0"
+		"discord.js": "^14.14.1"
 	}
 }
