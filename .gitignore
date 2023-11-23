@@ -2,7 +2,7 @@ node_modules
 dist
 .idea
 *.iml
-out
+lib
 gen
 TODO.md
 examples/**/.env
