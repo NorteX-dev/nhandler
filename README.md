@@ -20,13 +20,9 @@ This handler won't work with non-TS projects, as it relies on implementing inter
 
 ### Installation
 ```bash
-npm install nhandler
-```
-```bash
-yarn add nhandler
-```
-```bash
-pnpm install nhandler
+$ npm install nhandler
+$ yarn add nhandler
+$ pnpm install nhandler
 ```
 
 ### Example usage
