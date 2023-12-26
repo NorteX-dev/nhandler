@@ -12,11 +12,6 @@ import {
 	UserSelectMenuInteraction,
 } from "discord.js";
 
-export type AnyCommandInteraction =
-	| ChatInputCommandInteraction
-	| UserContextMenuCommandInteraction
-	| MessageContextMenuCommandInteraction;
-
 export type AnyComponentInteraction =
 	| ButtonInteraction
 	| StringSelectMenuInteraction
@@ -25,10 +20,14 @@ export type AnyComponentInteraction =
 	| RoleSelectMenuInteraction
 	| MentionableSelectMenuInteraction
 	| ModalSubmitInteraction;
+export type ContextMenuInteraction = UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
 
-export const isCommandInteraction = (interaction: any): interaction is AnyCommandInteraction => {
+export const isCommandInteraction = (interaction: any): interaction is ChatInputCommandInteraction => {
+	return interaction instanceof ChatInputCommandInteraction;
+};
+
+export const isContextMenuInteraction = (interaction: any): interaction is ContextMenuInteraction => {
 	return (
-		interaction instanceof ChatInputCommandInteraction ||
 		interaction instanceof UserContextMenuCommandInteraction ||
 		interaction instanceof MessageContextMenuCommandInteraction
 	);

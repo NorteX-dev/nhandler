@@ -5,7 +5,6 @@ import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js
 
 import { CommandError } from "../errors/CommandError";
 import { Command, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
-import { AnyCommandInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
 
 export class CommandHandler extends BaseHandler {
@@ -53,12 +52,13 @@ export class CommandHandler extends BaseHandler {
 					continue;
 				}
 				this.register(instance);
+				this.commandsToRegister.push(CommandHandler.commandMapper(instance));
 			}
 		}
 		return this;
 	}
 
-	checkConditionals(event: AnyCommandInteraction, command: Command): CommandError | undefined {
+	checkConditionals(event: ChatInputCommandInteraction, command: Command): CommandError | undefined {
 		if (command.guildId && event.guildId !== command.guildId) {
 			return new CommandError("This command is not available in this guild.");
 		}
@@ -74,9 +74,11 @@ export class CommandHandler extends BaseHandler {
 		return undefined;
 	}
 
-	runCommand(event: AnyCommandInteraction, metadata: any = {}): void {
+	runCommand(event: ChatInputCommandInteraction, metadata: any = {}): void {
 		if (!(event instanceof ChatInputCommandInteraction)) {
-			throw new Error("runCommand() currently only accepts ChatInputCommandInteraction.");
+			throw new Error(
+				"runCommand() only accepts ChatInputCommandInteraction. Use runContextMenuCommand() instead.",
+			);
 		}
 		const command = this.commands.find((command) => command.name === event.commandName);
 		if (!command) return this.debugLog(`runCommand(): Command ${event.commandName} not found.`);
@@ -123,29 +125,6 @@ export class CommandHandler extends BaseHandler {
 			return this.debugLog(`Command ${event.commandName} has no error() method implemented.`);
 		}
 		command.error(event, error);
-	}
-
-	checkApplicationReady(): void {
-		if (!this.client.application) {
-			throw new Error(
-				"Application is not ready. Update application commands after the client has emitted 'ready'.",
-			);
-		}
-	}
-
-	updateApplicationCommands() {
-		this.checkApplicationReady();
-		this.debugLog("Updating application commands.");
-		// Convert command classes to API compatible format.
-		const commands = this.commands.map(CommandHandler.commandMapper);
-		this.client
-			.application!.commands.set(commands as any)
-			.then((resp) => {
-				this.debugLog(`Updated ${resp.size} commands.`);
-			})
-			.catch((err) => {
-				throw err;
-			});
 	}
 
 	private static isOptionInstanceOfSubcommand(object: any): object is SubcommandWithOptions {

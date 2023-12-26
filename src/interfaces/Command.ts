@@ -1,5 +1,11 @@
-import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
-import { AutocompleteInteraction, ChatInputCommandInteraction, Client } from "discord.js";
+import { ApplicationCommandOptionType, ApplicationCommandType, LocalizationMap } from "discord-api-types/v10";
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	Client,
+	MessageContextMenuCommandInteraction,
+	UserContextMenuCommandInteraction,
+} from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
 
@@ -106,7 +112,7 @@ export interface Command {
 	 * this function will be called when an error occurs while executing the command,
 	 * for example an unauthorized user tries to use the command
 	 *
-	 * this will also be called if run() returns a CommandError
+	 * this will also be called if run() throws a CommandError
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
@@ -114,9 +120,9 @@ export interface Command {
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *
-	 * this method should return a Promise<CommandError | null>.
+	 * this method should return a Promise<void>.
 	 *
-	 * if the command throws a CommandError, this.error will be called, otherwise (in case of returning null) the command will be considered successful
+	 * if the command throws a CommandError, this.error will be called, otherwise (in case of returning void) the command will be considered successful
 	 * */
 	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<void>;
 }

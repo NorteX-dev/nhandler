@@ -45,9 +45,9 @@ export interface Component {
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *
-	 * this method should return a Promise<ComponentError | null>.
+	 * this method should return a Promise<void>.
 	 *
-	 * if the command throws a ComponentError, this.error will be called, otherwise (in case of returning null) the component execution will be considered successful
+	 * if the command throws a ComponentError, this.error will be called, otherwise (in case of returning void) the component execution will be considered successful.
 	 * */
 	run: (interaction: AnyComponentInteraction, metadata: any) => Promise<void>;
 }
