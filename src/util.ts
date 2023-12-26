@@ -20,13 +20,16 @@ export type AnyComponentInteraction =
 	| RoleSelectMenuInteraction
 	| MentionableSelectMenuInteraction
 	| ModalSubmitInteraction;
+
 export type ContextMenuInteraction = UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction;
 
 export const isCommandInteraction = (interaction: any): interaction is ChatInputCommandInteraction => {
 	return interaction instanceof ChatInputCommandInteraction;
 };
 
-export const isContextMenuInteraction = (interaction: any): interaction is ContextMenuInteraction => {
+export const isContextMenuInteraction = (
+	interaction: any,
+): interaction is UserContextMenuCommandInteraction | MessageContextMenuCommandInteraction => {
 	return (
 		interaction instanceof UserContextMenuCommandInteraction ||
 		interaction instanceof MessageContextMenuCommandInteraction

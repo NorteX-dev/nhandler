@@ -1,11 +1,11 @@
 import { EventEmitter } from "events";
 import { Client } from "discord.js";
 
+export let commandsToRegister: any[] = [];
+
 export class BaseHandler extends EventEmitter {
 	public client!: Client;
 	public debug: boolean;
-
-	public commandsToRegister: any[] = [];
 
 	constructor(debug: boolean) {
 		super();
@@ -22,21 +22,16 @@ export class BaseHandler extends EventEmitter {
 		if (this.debug) console.log("[NHandler DEBUG]", ...args);
 	}
 
-	checkApplicationReady(): void {
+	updateApplicationCommands() {
 		if (!this.client.application) {
 			throw new Error(
 				"Application is not ready. Update application commands after the client has emitted 'ready'.",
 			);
 		}
-	}
-
-	updateApplicationCommands() {
-		this.checkApplicationReady();
 		this.debugLog("Updating application commands.");
-		this.debugLog("Sending out", this.commandsToRegister);
-		this.client.application!.commands.set(this.commandsToRegister).then(() => {
+		console.log("Sending out", commandsToRegister);
+		this.client.application.commands.set(commandsToRegister).then(() => {
 			this.debugLog("Successfully updated application commands.");
-			this.commandsToRegister = [];
 		});
 	}
 }

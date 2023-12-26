@@ -5,7 +5,7 @@ import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js
 
 import { CommandError } from "../errors/CommandError";
 import { Command, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
-import { BaseHandler } from "./BaseHandler";
+import { BaseHandler, commandsToRegister } from "./BaseHandler";
 
 export class CommandHandler extends BaseHandler {
 	commands: Command[] = [];
@@ -19,6 +19,7 @@ export class CommandHandler extends BaseHandler {
 			throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
 		this.debugLog(`Registered command ${command.name}.`);
 		command.client = this.client;
+		commandsToRegister.push(CommandHandler.commandMapper(command));
 		this.commands.push(command);
 		this.emit("commandRegistered", command);
 		return this;
@@ -52,7 +53,6 @@ export class CommandHandler extends BaseHandler {
 					continue;
 				}
 				this.register(instance);
-				this.commandsToRegister.push(CommandHandler.commandMapper(instance));
 			}
 		}
 		return this;

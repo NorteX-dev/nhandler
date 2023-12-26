@@ -1,11 +1,11 @@
 {
 	"name": "nhandler",
-	"version": "2.2.0",
+	"version": "3.0.0",
 	"description": "The easy to use, all-in-one command, event and component handler.",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
 	"scripts": {
-		"test": "nodemon test/index.ts",
+		"test": "nodemon examples/test/index.ts",
 		"build": "tsc",
 		"pub": "npm run build && npm publish",
 		"pub:dev": "npm run build && npm publish --tag \"dev\""

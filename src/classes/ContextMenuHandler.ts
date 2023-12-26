@@ -1,10 +1,11 @@
 import { readdirSync, statSync } from "fs";
 import * as path from "path";
-import { ChatInputCommandInteraction } from "discord.js";
+import { MessageContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
 
 import { ContextMenuActionError } from "../errors/ContextMenuActionError";
 import { ContextMenuAction } from "../interfaces/ContextMenuAction";
-import { BaseHandler } from "./BaseHandler";
+import { ContextMenuInteraction } from "../util";
+import { BaseHandler, commandsToRegister } from "./BaseHandler";
 
 export class ContextMenuHandler extends BaseHandler {
 	actions: ContextMenuAction[] = [];
@@ -18,6 +19,7 @@ export class ContextMenuHandler extends BaseHandler {
 			throw new Error(`Cannot register context menu action with duplicate name: '${action.name}'.`);
 		this.debugLog(`Registered context menu action ${action.name}.`);
 		action.client = this.client;
+		commandsToRegister.push(ContextMenuHandler.actionMapper(action));
 		this.actions.push(action);
 		this.emit("actionRegistered", action);
 		return this;
@@ -51,16 +53,12 @@ export class ContextMenuHandler extends BaseHandler {
 					continue;
 				}
 				this.register(instance);
-				this.commandsToRegister.push(ContextMenuHandler.actionMapper(instance));
 			}
 		}
 		return this;
 	}
 
-	checkConditionals(
-		event: ChatInputCommandInteraction,
-		action: ContextMenuAction,
-	): ContextMenuActionError | undefined {
+	checkConditionals(event: ContextMenuInteraction, action: ContextMenuAction): ContextMenuActionError | undefined {
 		if (action.guildId && event.guildId !== action.guildId) {
 			return new ContextMenuActionError("This action is not available in this guild.");
 		}
@@ -76,11 +74,9 @@ export class ContextMenuHandler extends BaseHandler {
 		return undefined;
 	}
 
-	runAction(event: ChatInputCommandInteraction, metadata: any = {}): void {
-		if (!(event instanceof ChatInputCommandInteraction)) {
-			throw new Error(
-				"runAction() only accepts ChatInputCommandInteraction. Use runContextMenuCommand() instead.",
-			);
+	runAction(event: ContextMenuInteraction, metadata: any = {}): void {
+		if (!event.commandType || event.commandType < 2) {
+			throw new Error("runAction() only accepts ContextMenuInteraction.");
 		}
 		const action = this.actions.find((action) => action.name === event.commandName);
 		if (!action) return this.debugLog(`runAction(): Command ${event.commandName} not found.`);
@@ -111,7 +107,7 @@ export class ContextMenuHandler extends BaseHandler {
 
 	private callErrorIfPresent(
 		action: ContextMenuAction,
-		event: ChatInputCommandInteraction,
+		event: ContextMenuInteraction,
 		error: ContextMenuActionError,
 	): void {
 		if (!action.error || typeof action.error !== "function") {

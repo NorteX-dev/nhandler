@@ -2,6 +2,7 @@ import { ApplicationCommandType } from "discord-api-types/v10";
 import { ChatInputCommandInteraction, Client } from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
+import { ContextMenuInteraction } from "../util";
 
 export interface ContextMenuAction {
 	/**
@@ -15,11 +16,7 @@ export interface ContextMenuAction {
 	/**
 	 * type - defines the type of the context menu - can either be user or message
 	 * */
-	type: ApplicationCommandType.User | ApplicationCommandType.Message;
-	/**
-	 * description - defines the description of the command
-	 * */
-	description: string;
+	type: ApplicationCommandType;
 	/**
 	 * allowDm - boolean, enables or disables the command for DMs
 	 * */
@@ -53,7 +50,7 @@ export interface ContextMenuAction {
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: ChatInputCommandInteraction, error: CommandError) => Promise<void> | void;
+	error?: (interaction: ContextMenuInteraction, error: CommandError) => Promise<void> | void;
 	/**
 	 * this function will be called when the action is successfully executed.
 	 *
@@ -61,5 +58,5 @@ export interface ContextMenuAction {
 	 *
 	 * if the command throws a ContextMenuActionError, this.error will be called, otherwise (in case of returning void) the action will be considered successful.
 	 * */
-	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<void>;
+	run: (interaction: ContextMenuInteraction, metadata: any) => Promise<void>;
 }
