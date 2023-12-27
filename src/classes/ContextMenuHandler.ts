@@ -1,6 +1,5 @@
 import { readdirSync, statSync } from "fs";
 import * as path from "path";
-import { MessageContextMenuCommandInteraction, UserContextMenuCommandInteraction } from "discord.js";
 
 import { ContextMenuActionError } from "../errors/ContextMenuActionError";
 import { ContextMenuAction } from "../interfaces/ContextMenuAction";
@@ -10,13 +9,15 @@ import { BaseHandler, commandsToRegister } from "./BaseHandler";
 export class ContextMenuHandler extends BaseHandler {
 	actions: ContextMenuAction[] = [];
 
-	actionExists(name: string) {
-		return this.actions.some((action) => action.name === name);
+	actionExists(name: string, type: number) {
+		return this.actions.some((action) => action.name === name && action.type === type);
 	}
 
 	register(action: ContextMenuAction): ContextMenuHandler {
-		if (this.actionExists(action.name))
-			throw new Error(`Cannot register context menu action with duplicate name: '${action.name}'.`);
+		if (this.actionExists(action.name, action.type))
+			throw new Error(
+				`Cannot register context menu action with duplicate name and type: '${action.name}', type '${action.type}'.`,
+			);
 		this.debugLog(`Registered context menu action ${action.name}.`);
 		action.client = this.client;
 		commandsToRegister.push(ContextMenuHandler.actionMapper(action));

@@ -29,7 +29,6 @@ export class BaseHandler extends EventEmitter {
 			);
 		}
 		this.debugLog("Updating application commands.");
-		console.log("Sending out", commandsToRegister);
 		this.client.application.commands.set(commandsToRegister).then(() => {
 			this.debugLog("Successfully updated application commands.");
 		});

@@ -1,5 +1,5 @@
 import { ApplicationCommandType } from "discord-api-types/v10";
-import { ChatInputCommandInteraction, Client } from "discord.js";
+import { Client } from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
 import { ContextMenuInteraction } from "../util";
