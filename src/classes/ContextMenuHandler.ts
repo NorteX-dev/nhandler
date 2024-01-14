@@ -79,7 +79,9 @@ export class ContextMenuHandler extends BaseHandler {
 		if (!event.commandType || event.commandType < 2) {
 			throw new Error("runAction() only accepts ContextMenuInteraction.");
 		}
-		const action = this.actions.find((action) => action.name === event.commandName);
+		const action = this.actions.find(
+			(action) => action.name === event.commandName && action.type === event.commandType,
+		);
 		if (!action) return this.debugLog(`runAction(): Command ${event.commandName} not found.`);
 		this.debugLog(`Running context menu action ${action.name}.`);
 
