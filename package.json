@@ -1,6 +1,6 @@
 {
 	"name": "nhandler",
-	"version": "3.0.3",
+	"version": "3.0.4",
 	"description": "The easy to use, all-in-one command, event and component handler.",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
