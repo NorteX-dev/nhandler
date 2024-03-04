@@ -3,4 +3,4 @@
 export * from "./embeds";
 export * from "./modules";
 export * from "./logger";
-export * from "./util";
+export * from "./configParser";

@@ -1,9 +1,14 @@
-import { readFileSync } from "./util";
+import { readFileSync } from "fs";
+import { prettifyZodError } from "@nortex/pretty-zod-error";
+import yaml from "js-yaml";
+import type { ZodObject } from "zod";
 
-export const loadConfig = async <T>(configShape: ZodObject<any>): Promise<T> => {
+import { severeLog } from "./logger";
+
+export const loadConfig = async <T>(configShape: ZodObject<any>, path: string): Promise<T> => {
 	let yamlFile: any;
 	try {
-		yamlFile = yaml.load(readFileSync(path.join(__dirname, "../../config.yml"), "utf-8"));
+		yamlFile = yaml.load(readFileSync(path, "utf-8"));
 	} catch (err) {
 		severeLog("Fatal: config.yml is not a valid YAML file.");
 		process.exit(1);
