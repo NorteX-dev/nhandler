@@ -23,7 +23,7 @@ It includes:
 await loadModules({ commandHandler, eventHandler, componentHandler });
 ```
 
-> Modules are a totally separate can of warms frmo all the other features and the logic behind them is explained below.
+> Modules are a totally separate can of warms from all the other features and the logic behind them is explained below.
 
 -   Opinionated colorful logger with 4 stages of severity and writing to disk.
 
