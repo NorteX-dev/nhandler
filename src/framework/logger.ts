@@ -1,31 +1,29 @@
-import chalk from "chalk";
-import { readPackageJson } from "./util";
+import { existsSync, writeFile, writeFileSync } from "fs";
 import path from "path";
 import { inspect } from "util";
-import { existsSync, writeFile, writeFileSync } from "fs";
+import c from "ansi-colors";
 
-export const welcome = () => {
-	const { pretty_name, version } = readPackageJson();
-	console.log(chalk.green(`┌ ${pretty_name} • v${version}`));
+export const welcomeLog = (name: string, version: string) => {
+	console.log(c.green(`┌ ${name} • v${version}`));
 };
 
 export const debugLog = (...messages: any[]) => {
-	console.log(chalk.gray("└ Debug"), ...messages);
+	console.log(c.gray("└ Debug"), ...messages);
 	writeLogToFile("[Debug]", ...messages);
 };
 
 export const infoLog = (...messages: any[]) => {
-	console.log(chalk.yellow("└ Info"), ...messages);
+	console.log(c.yellow("└ Info"), ...messages);
 	writeLogToFile("[Info]", ...messages);
 };
 
 export const severeLog = (...messages: any[]) => {
-	console.log(chalk.red("└ Severe"), ...messages);
+	console.log(c.red("└ Severe"), ...messages);
 	writeLogToFile("[Severe]", ...messages);
 };
 
 export const warnLog = (...messages: any[]) => {
-	console.log(chalk.yellow("└ Warn"), ...messages);
+	console.log(c.yellow("└ Warn"), ...messages);
 	writeLogToFile("[Warn]", ...messages);
 };
 

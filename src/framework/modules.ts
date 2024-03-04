@@ -1,9 +1,10 @@
 import { readdirSync } from "fs";
-import { debugLog, severeLog, warnLog } from "./logger";
 import path from "path";
-import { Hono } from "hono";
-import { Command, CommandHandler, Component, Event, EventHandler } from "nhandler";
-import { BaseEntity } from "typeorm";
+import type { Hono } from "hono";
+import type { BaseEntity } from "typeorm";
+
+import type { Command, CommandHandler, Component, Event, EventHandler } from "..";
+import { debugLog, severeLog, warnLog } from "./logger";
 
 export let modules: Module[] = [];
 
@@ -29,21 +30,21 @@ export const loadModules = async ({
 			const module = await import("file://" + path.join(modulePath, "./module.ts"));
 			if (!("metadata" in module) || !("init" in module)) {
 				severeLog(
-					`Skipping loading module from '${modulePath}'. Please make sure the module exports a 'metadata' and 'init' property.`
+					`Skipping loading module from '${modulePath}'. Please make sure the module exports a 'metadata' and 'init' property.`,
 				);
 				continue;
 			}
 
 			if (!module.metadata.id) {
 				severeLog(
-					`Skipping loading module from '${modulePath}'. Please make sure the module exports a 'metadata.id' property.`
+					`Skipping loading module from '${modulePath}'. Please make sure the module exports a 'metadata.id' property.`,
 				);
 				continue;
 			}
 
 			if (loadedModules.find((m) => m.metadata.id === module.metadata.id)) {
 				severeLog(
-					`Skipping loading module from '${modulePath}'. Module with id '${module.metadata.id}' already loaded.`
+					`Skipping loading module from '${modulePath}'. Module with id '${module.metadata.id}' already loaded.`,
 				);
 				continue;
 			}
@@ -63,7 +64,7 @@ export const loadModules = async ({
 		for (let dependency of module.metadata.depends) {
 			if (!loadedModules.find((m) => m.metadata.id === dependency)) {
 				warnLog(
-					`Module '${module.metadata.id}' depends on module '${dependency}', which is not available. Disabling module.`
+					`Module '${module.metadata.id}' depends on module '${dependency}', which is not available. Disabling module.`,
 				);
 				module.metadata.enabled = false;
 			}

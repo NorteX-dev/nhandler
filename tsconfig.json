@@ -3,9 +3,10 @@
 		"target": "es2020",
 		"module": "commonjs",
 		"declaration": true,
-		"outDir": "./lib",
+		"outDir": "./dist",
 		"strict": true,
-		"lib": ["dom", "es5", "scripthost"]
+		"lib": ["dom", "es5", "scripthost"],
+		"esModuleInterop": true
 	},
 	"include": ["src", "test"],
 	"exclude": ["node_modules", "**/__tests__/*", "examples"]
