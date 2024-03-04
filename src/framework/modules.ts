@@ -12,12 +12,12 @@ export const loadModules = async ({
 	commandHandler,
 	eventHandler,
 	componentHandler,
-	modulesPath
+	modulesPath,
 }: {
 	commandHandler: CommandHandler;
 	eventHandler: EventHandler;
 	componentHandler: ComponentHandler;
-	modulesPath: string
+	modulesPath: string;
 }): Promise<void> => {
 	let rootModulesDir = modulesPath;
 	let loadedModules: Module[] = [];
@@ -29,7 +29,7 @@ export const loadModules = async ({
 	// Load modules into array
 	try {
 		for (let modulePath of paths) {
-			const module = await import("file://" + path.join(modulePath, "./module.ts"));
+			const module = await import("file:///" + path.join(modulePath, "./module.ts").replace("\\", "/"));
 			if (!("metadata" in module) || !("init" in module)) {
 				severeLog(
 					`Skipping loading module from '${modulePath}'. Please make sure the module exports a 'metadata' and 'init' property.`,
