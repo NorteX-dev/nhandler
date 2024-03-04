@@ -7,3 +7,4 @@ prettier.config.cjs
 tsconfig.json
 examples
 docs
+packages/cli
