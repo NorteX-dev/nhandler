@@ -30,7 +30,7 @@ export const loadModules = async ({
 	try {
 		for (let modulePath of paths) {
 			const module = await import(
-				"file:///" + path.join(modulePath, "./module.ts").replace(new RegExp("\\", "gi"), "/")
+				"file:///" + path.join(modulePath, "./module.ts").replace(new RegExp("\\\\", "gi"), "/")
 			);
 			if (!("metadata" in module) || !("init" in module)) {
 				severeLog(
