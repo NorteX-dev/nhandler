@@ -2,6 +2,8 @@
 
 ### Beta
 
+## Feature set
+
 NHandler Framework is an extension to NHandler which provides opinionated baseplates for Discord bot creation.
 
 Import like:
@@ -20,6 +22,8 @@ It includes:
 // componentHandler is a ComponentHandler instance from NHandler.
 await loadModules({ commandHandler, eventHandler, componentHandler });
 ```
+
+> Modules are a totally separate can of warms frmo all the other features and the logic behind them is explained below.
 
 -   Opinionated colorful logger with 4 stages of severity and writing to disk.
 
@@ -67,3 +71,7 @@ const parsedConfig = loadConfig<Config>(configShape);
 ```
 
 More customisability coming in updates.
+
+## The idea behind modularity
+
+TODO
