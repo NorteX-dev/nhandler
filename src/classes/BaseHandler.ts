@@ -5,9 +5,9 @@ export let commandsToRegister: any[] = [];
 
 export class BaseHandler extends EventEmitter {
 	public client!: Client;
-	public debug: boolean;
+	public debug?: (...args: any[]) => void;
 
-	constructor(debug: boolean) {
+	constructor(debug?: (...args: any[]) => void) {
 		super();
 		this.debug = debug;
 	}
@@ -19,7 +19,7 @@ export class BaseHandler extends EventEmitter {
 
 	public debugLog(...args: unknown[]) {
 		this.emit("debug", ...args);
-		if (this.debug) console.log("[NHandler DEBUG]", ...args);
+		if (this.debug) this.debug(...args);
 	}
 
 	updateApplicationCommands() {

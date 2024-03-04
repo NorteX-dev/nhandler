@@ -3,7 +3,7 @@ import path from "path";
 import type { Hono } from "hono";
 import type { BaseEntity } from "typeorm";
 
-import type { Command, CommandHandler, Component, Event, EventHandler } from "..";
+import type { Command, CommandHandler, Component, ComponentHandler, Event, EventHandler } from "..";
 import { debugLog, severeLog, warnLog } from "./logger";
 
 export let modules: Module[] = [];
@@ -12,13 +12,15 @@ export const loadModules = async ({
 	commandHandler,
 	eventHandler,
 	componentHandler,
+	modulesPath
 }: {
 	commandHandler: CommandHandler;
 	eventHandler: EventHandler;
-	componentHandler: any;
+	componentHandler: ComponentHandler;
+	modulesPath: string
 }): Promise<void> => {
+	let rootModulesDir = modulesPath;
 	let loadedModules: Module[] = [];
-	let rootModulesDir = path.join(__dirname, "../modules");
 	let paths = readdirSync(rootModulesDir);
 	paths = paths.map((p) => path.join(rootModulesDir, p));
 
