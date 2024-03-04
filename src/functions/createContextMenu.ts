@@ -12,7 +12,7 @@ export const createContextMenu = <T = Client>({
 	debug = undefined,
 }: ContextMenuHandlerCreationOptions<T>): ContextMenuHandler => {
 	if (!client) throw new Error("createContextMenu(): Client is required.");
-	const handler = new ContextMenuHandler(debug ?? false);
+	const handler = new ContextMenuHandler(debug ? console.log : undefined);
 	handler.setClient<T>(client);
 	return handler;
 };
