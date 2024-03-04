@@ -24,3 +24,5 @@ export const warnEmbed = (content?: string) => {
 export const successEmbed = (content?: string) => {
 	return baseEmbed(content); //.setColor(config.embeds.colors.success);
 };
+
+// TODO : add color customisation

@@ -35,3 +35,5 @@ export const writeLogToFile = (...messages: any[]) => {
 		if (err) severeLog("Failed to write log to file.");
 	});
 };
+
+// TODO : change file path to be inited

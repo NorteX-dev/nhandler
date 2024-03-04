@@ -93,19 +93,41 @@ export const loadModules = async ({
 	modules = loadedModules;
 };
 
+/**
+ * Gets all enabled modules.
+ * Disabled modules are discarded at the loading stage, so it is impossible to get disabled modules.
+ */
 export const getModules = () => {
 	return modules;
 };
 
+/**
+ * Gets a module by ID or undefined if the module does not exist.
+ *
+ * @param moduleId The id of the module.
+ */
 export const getModule = (moduleId: string) => {
 	return modules.find((m) => m.metadata.id === moduleId);
 };
 
-export const moduleEnabled = (moduleId: string) => {
+/**
+ * Returns a boolean defining whether the module is active (loaded & enabled) or not.
+ *
+ * @param moduleId The id of the module.
+ */
+
+export const moduleActive = (moduleId: string): boolean => {
 	const module = modules.find((m) => m.metadata.id === moduleId);
-	return module?.metadata.enabled;
+	return module?.metadata.enabled ?? false;
 };
 
+/**
+ * Returns either the function signature of undefined (if the module is non-existent/disabled).
+ * Before using getAciton it is recommended to check if the module is active using moduleEnabled().
+ *
+ * @param moduleId The id of the module.
+ * @param actionId The name of the action (as defined in the object key).
+ * */
 export const getAction = (moduleId: string, actionId: string) => {
 	const module = modules.find((m) => m.metadata.id === moduleId);
 	if (!module) return;
