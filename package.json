@@ -1,12 +1,12 @@
 {
 	"name": "nhandler",
-	"version": "3.1.1",
+	"version": "3.1.2",
 	"description": "The easy to use, all-in-one command, event and component handler.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"exports": {
 		".": "./dist/index.js",
-		"./framework": "./dist/framework.js"
+		"./framework": "./dist/framework/index.js"
 	},
 	"scripts": {
 		"test": "nodemon examples/test/index.ts",
