@@ -4,10 +4,6 @@
 	"description": "The easy to use, all-in-one command, event and component handler.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"exports": {
-		".": "./dist/index.js",
-		"./framework": "./dist/framework/index.js"
-	},
 	"scripts": {
 		"test": "nodemon examples/test/index.ts",
 		"build": "tsc",
