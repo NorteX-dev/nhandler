@@ -145,6 +145,8 @@ export class CommandHandler extends BaseHandler {
 			defaultMemberPermissions: command.defaultMemberPermissions ?? null,
 			description: command.description,
 			descriptionLocalizations: command.descriptionLocalizations,
+			integration_types: command.integrationTypes ?? [0],
+			contexts: command.contexts ?? [0],
 			options: command.options?.map(CommandHandler.optionsMapper),
 		};
 	}

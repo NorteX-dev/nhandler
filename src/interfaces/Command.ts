@@ -1,10 +1,8 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, LocalizationMap } from "discord-api-types/v10";
+import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
 import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	Client,
-	MessageContextMenuCommandInteraction,
-	UserContextMenuCommandInteraction,
 } from "discord.js";
 
 import { CommandError } from "../errors/CommandError";
@@ -97,6 +95,14 @@ export interface Command {
 	 * defaultMemberPermissions - a permissions bitfield ([PermissionsBitField](https://old.discordjs.dev/#/docs/discord.js/main/class/PermissionsBitField)) written in bigint, that defines the default permissions for the command
 	 * */
 	defaultMemberPermissions?: bigint;
+	/**
+	* integrationTypes - array of integration types that the command is allowed to be used in
+	* */
+	integrationTypes?: number[]
+	/**
+	 * contexts - array of contexts in which the command is allowed to be used
+	 * */
+	contexts?: number[];
 	/**
 	 * metadata - miscellaneous data for the command, for example category
 	 * */
