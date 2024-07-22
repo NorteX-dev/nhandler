@@ -1,7 +1,7 @@
 import { readdirSync, statSync } from "fs";
 import * as path from "path";
 
-import { ContextMenuActionError } from "../errors/ContextMenuActionError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { ContextMenuAction } from "../interfaces/ContextMenuAction";
 import { ContextMenuInteraction } from "../util";
 import { BaseHandler, commandsToRegister } from "./BaseHandler";
@@ -59,18 +59,18 @@ export class ContextMenuHandler extends BaseHandler {
 		return this;
 	}
 
-	checkConditionals(event: ContextMenuInteraction, action: ContextMenuAction): ContextMenuActionError | undefined {
+	checkConditionals(event: ContextMenuInteraction, action: ContextMenuAction): ExecutionError | undefined {
 		if (action.guildId && event.guildId !== action.guildId) {
-			return new ContextMenuActionError("This action is not available in this guild.");
+			return new ExecutionError("This action is not available in this guild.");
 		}
 		if (action.allowDm === false && event.guildId === null) {
-			return new ContextMenuActionError("This action is not available in DMs.");
+			return new ExecutionError("This action is not available in DMs.");
 		}
 		if (action.allowedGuilds && !action.allowedGuilds.includes(event.guildId!)) {
-			return new ContextMenuActionError("This action is not available in this guild.");
+			return new ExecutionError("This action is not available in this guild.");
 		}
 		if (action.allowedUsers && !action.allowedUsers.includes(event.user.id)) {
-			return new ContextMenuActionError("You are not allowed to use this action.");
+			return new ExecutionError("You are not allowed to use this action.");
 		}
 		return undefined;
 	}
@@ -101,18 +101,14 @@ export class ContextMenuHandler extends BaseHandler {
 		}
 
 		promise.catch((actError) => {
-			if (!(actError instanceof ContextMenuActionError)) {
+			if (!(actError instanceof ExecutionError)) {
 				throw actError;
 			}
 			this.callErrorIfPresent(action, event, actError);
 		});
 	}
 
-	private callErrorIfPresent(
-		action: ContextMenuAction,
-		event: ContextMenuInteraction,
-		error: ContextMenuActionError,
-	): void {
+	private callErrorIfPresent(action: ContextMenuAction, event: ContextMenuInteraction, error: ExecutionError): void {
 		if (!action.error || typeof action.error !== "function") {
 			return this.debugLog(`Action ${event.commandName} has no error() method implemented.`);
 		}

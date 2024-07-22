@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 
-import { ComponentError } from "../errors/ComponentError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { AnyComponentInteraction } from "../util";
 
 export interface Component {
@@ -41,7 +41,7 @@ export interface Component {
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: AnyComponentInteraction, error: ComponentError) => Promise<void> | void;
+	error?: (interaction: AnyComponentInteraction, error: ExecutionError) => Promise<void> | void;
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *

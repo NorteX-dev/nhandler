@@ -4,9 +4,7 @@ export * from "./classes/ComponentHandler";
 export * from "./classes/EventHandler";
 export * from "./classes/ContextMenuHandler";
 
-export * from "./errors/CommandError";
-export * from "./errors/ComponentError";
-export * from "./errors/ContextMenuActionError";
+export * from "./errors/ExecutionError";
 
 export * from "./functions/createCommands";
 export * from "./functions/createComponents";

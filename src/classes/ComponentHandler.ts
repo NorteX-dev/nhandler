@@ -1,8 +1,7 @@
 import { readdirSync, statSync } from "fs";
 import * as path from "path";
 
-import { CommandError } from "../errors/CommandError";
-import { ComponentError } from "../errors/ComponentError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { Component } from "../interfaces/Component";
 import { AnyComponentInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
@@ -78,14 +77,14 @@ export class ComponentHandler extends BaseHandler {
 		}
 
 		promise.catch((cmpError) => {
-			if (!(cmpError instanceof ComponentError)) {
+			if (!(cmpError instanceof ExecutionError)) {
 				throw cmpError;
 			}
 			this.callErrorIfPresent(component, event, cmpError);
 		});
 	}
 
-	private callErrorIfPresent(component: Component, event: AnyComponentInteraction, error: CommandError): void {
+	private callErrorIfPresent(component: Component, event: AnyComponentInteraction, error: ExecutionError): void {
 		if (!component.error || typeof component.error !== "function") {
 			return this.debugLog(`Component ${event.customId} has no error() method implemented.`);
 		}

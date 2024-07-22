@@ -3,7 +3,7 @@ import * as path from "path";
 import { ApplicationCommandType } from "discord-api-types/v10";
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 
-import { CommandError } from "../errors/CommandError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { Command, CommandOption, SubcommandWithOptions } from "../interfaces/Command";
 import { BaseHandler, commandsToRegister } from "./BaseHandler";
 
@@ -58,18 +58,18 @@ export class CommandHandler extends BaseHandler {
 		return this;
 	}
 
-	checkConditionals(event: ChatInputCommandInteraction, command: Command): CommandError | undefined {
+	checkConditionals(event: ChatInputCommandInteraction, command: Command): ExecutionError | undefined {
 		if (command.guildId && event.guildId !== command.guildId) {
-			return new CommandError("This command is not available in this guild.");
+			return new ExecutionError("This command is not available in this guild.");
 		}
 		if (command.allowDm === false && event.guildId === null) {
-			return new CommandError("This command is not available in DMs.");
+			return new ExecutionError("This command is not available in DMs.");
 		}
 		if (command.allowedGuilds && !command.allowedGuilds.includes(event.guildId!)) {
-			return new CommandError("This command is not available in this guild.");
+			return new ExecutionError("This command is not available in this guild.");
 		}
 		if (command.allowedUsers && !command.allowedUsers.includes(event.user.id)) {
-			return new CommandError("You are not allowed to use this command.");
+			return new ExecutionError("You are not allowed to use this command.");
 		}
 		return undefined;
 	}
@@ -100,7 +100,7 @@ export class CommandHandler extends BaseHandler {
 		}
 
 		promise.catch((cmdError) => {
-			if (!(cmdError instanceof CommandError)) {
+			if (!(cmdError instanceof ExecutionError)) {
 				throw cmdError;
 			}
 			this.callErrorIfPresent(command, event, cmdError);
@@ -120,7 +120,7 @@ export class CommandHandler extends BaseHandler {
 		command.autocomplete(event, metadata);
 	}
 
-	private callErrorIfPresent(command: Command, event: ChatInputCommandInteraction, error: CommandError): void {
+	private callErrorIfPresent(command: Command, event: ChatInputCommandInteraction, error: ExecutionError): void {
 		if (!command.error || typeof command.error !== "function") {
 			return this.debugLog(`Command ${event.commandName} has no error() method implemented.`);
 		}

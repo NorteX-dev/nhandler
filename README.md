@@ -1,9 +1,12 @@
 <img alt="Header" src="https://cdn.discordapp.com/attachments/611317811880394801/1168264122891251712/Frame_1_1.png?ex=655121c0&amp;is=653eacc0&amp;hm=5f2219c5c5147b2650a7292de562dbb60a5636a8678e3fe142bc55ebb319d7cd&amp;" width="100%"/>
 
-# Nhandler v2
+# Nhandler v4
 NHandler is an opinionated framework to help you with development of advanced Discord bots using discord.js.
 
 It supports the latest Discord.js version v14.14.1 and TypeScript v5.3.2.
+
+### Changelog v3 to v4
+- Consolidated CommandError and ComponentError into a single error: ExecutionError. This was done because it was too easy to throw a CommandError in a component class, and therefore the error was not caught by the command handler.
 
 ### Main features
 - Fully TypeScript based.
@@ -142,4 +145,3 @@ export class InteractionCreate implements Event {
 ```
 
 For a full example, take a look at the `examples` folder in our [GitHub repository](https://github.com/nortex-dev/nhandler).
-

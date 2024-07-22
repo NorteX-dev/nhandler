@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from "discord-api-types/v10";
 import { Client } from "discord.js";
 
-import { CommandError } from "../errors/CommandError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { ContextMenuInteraction } from "../util";
 
 export interface ContextMenuAction {
@@ -50,7 +50,7 @@ export interface ContextMenuAction {
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: ContextMenuInteraction, error: CommandError) => Promise<void> | void;
+	error?: (interaction: ContextMenuInteraction, error: ExecutionError) => Promise<void> | void;
 	/**
 	 * this function will be called when the action is successfully executed.
 	 *

@@ -1,11 +1,7 @@
 import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
-import {
-	AutocompleteInteraction,
-	ChatInputCommandInteraction,
-	Client,
-} from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client } from "discord.js";
 
-import { CommandError } from "../errors/CommandError";
+import { ExecutionError } from "../errors/ExecutionError";
 
 type SubcommandOptionTypesUnion =
 	| ApplicationCommandOptionType.Subcommand
@@ -96,9 +92,9 @@ export interface Command {
 	 * */
 	defaultMemberPermissions?: bigint;
 	/**
-	* integrationTypes - array of integration types that the command is allowed to be used in
-	* */
-	integrationTypes?: number[]
+	 * integrationTypes - array of integration types that the command is allowed to be used in
+	 * */
+	integrationTypes?: number[];
 	/**
 	 * contexts - array of contexts in which the command is allowed to be used
 	 * */
@@ -122,7 +118,7 @@ export interface Command {
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: ChatInputCommandInteraction, error: CommandError) => Promise<void> | void;
+	error?: (interaction: ChatInputCommandInteraction, error: ExecutionError) => Promise<void> | void;
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *
