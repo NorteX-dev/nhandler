@@ -1,8 +1,7 @@
 import { readdirSync, statSync } from "fs";
 import * as path from "path";
 
-import { CommandError } from "../errors/CommandError";
-import { ComponentError } from "../errors/ComponentError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { Component } from "../interfaces/Component";
 import { AnyComponentInteraction } from "../util";
 import { BaseHandler } from "./BaseHandler";
@@ -10,11 +9,11 @@ import { BaseHandler } from "./BaseHandler";
 export class ComponentHandler extends BaseHandler {
 	components: Component[] = [];
 
-	componentExists(name: string) {
+	protected componentExists(name: string) {
 		return this.components.some((cmp) => cmp.customId === name);
 	}
 
-	register(component: Component): ComponentHandler {
+	public register(component: Component): ComponentHandler {
 		if (this.componentExists(component.customId))
 			throw new Error(`Cannot register component with duplicate customId: '${component.customId}'.`);
 		this.debugLog(`Registered component ${component.customId}.`);
@@ -74,18 +73,18 @@ export class ComponentHandler extends BaseHandler {
 		}
 		const promise: Promise<void> = component.run(event, metadata);
 		if (!(typeof promise === "object" && promise instanceof Promise)) {
-			throw new Error("Component run method must return a promise.");
+			throw new Error("Component run() method must return a promise.");
 		}
 
 		promise.catch((cmpError) => {
-			if (!(cmpError instanceof ComponentError)) {
+			if (!(cmpError instanceof ExecutionError)) {
 				throw cmpError;
 			}
 			this.callErrorIfPresent(component, event, cmpError);
 		});
 	}
 
-	private callErrorIfPresent(component: Component, event: AnyComponentInteraction, error: CommandError): void {
+	private callErrorIfPresent(component: Component, event: AnyComponentInteraction, error: ExecutionError): void {
 		if (!component.error || typeof component.error !== "function") {
 			return this.debugLog(`Component ${event.customId} has no error() method implemented.`);
 		}

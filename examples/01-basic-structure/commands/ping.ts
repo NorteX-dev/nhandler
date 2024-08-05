@@ -1,6 +1,6 @@
 import { ButtonStyle } from "discord-api-types/v10";
 import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction } from "discord.js";
-import { Command, CommandError } from "nhandler";
+import { Command, ExecutionError } from "nhandler";
 
 import { MyClient } from "../index";
 
@@ -13,9 +13,9 @@ export class PingCommand implements Command {
 	name = "ping";
 	description = "Pong!";
 
-	// The error method is called when a precondition fails, or when the command returns CommandError.
+	// The error method is called when a precondition fails, or when the command returns ExecutionError.
 	// You should handle the error by replying to the interaction with the error message.
-	error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
+	error(interaction: ChatInputCommandInteraction, error: ExecutionError): Promise<void> | void {
 		interaction.reply({
 			content: "Error: " + error.message,
 			ephemeral: true,
@@ -24,14 +24,14 @@ export class PingCommand implements Command {
 	}
 
 	// The run callback is called when the command is ran.
-	async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
+	async run(interaction: ChatInputCommandInteraction): Promise<ExecutionError | void> {
 		const thing = 1;
 
 		// @ts-expect-error
 		if (thing === 2) {
-			// You can throw a CommandError. If you do, the exception will be caught & `error()` will be called.
-			// If you throw anything else than CommandError, the exception will be thrown as normal.
-			throw new CommandError("thing is 2");
+			// You can throw a ExecutionError. If you do, the exception will be caught & `error()` will be called.
+			// If you throw anything else than ExecutionError, the exception will be thrown as normal.
+			throw new ExecutionError("thing is 2");
 		}
 
 		await interaction.reply({

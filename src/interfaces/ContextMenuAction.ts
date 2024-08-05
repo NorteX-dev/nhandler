@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from "discord-api-types/v10";
 import { Client } from "discord.js";
 
-import { CommandError } from "../errors/CommandError";
+import { ExecutionError } from "../errors/ExecutionError";
 import { ContextMenuInteraction } from "../util";
 
 export interface ContextMenuAction {
@@ -46,17 +46,17 @@ export interface ContextMenuAction {
 	 * this function will be called when an error occurs while executing the command,
 	 * for example an unauthorized user tries to use the command
 	 *
-	 * this will also be called if run() throws a CommandError
+	 * this will also be called if run() throws a ExecutionError
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: ContextMenuInteraction, error: CommandError) => Promise<void> | void;
+	error?: (interaction: ContextMenuInteraction, error: ExecutionError) => Promise<void> | void;
 	/**
 	 * this function will be called when the action is successfully executed.
 	 *
 	 * this method should return a Promise<void>.
 	 *
-	 * if the command throws a ContextMenuActionError, this.error will be called, otherwise (in case of returning void) the action will be considered successful.
+	 * if the command throws a ExecutionError, this.error will be called, otherwise (in case of returning void) the action will be considered successful.
 	 * */
 	run: (interaction: ContextMenuInteraction, metadata: any) => Promise<void>;
 }

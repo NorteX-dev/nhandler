@@ -75,7 +75,7 @@ new MyClient();
 import { ApplicationCommandOptionType } from "discord-api-types/v10";
 import { ChatInputCommandInteraction } from "discord.js";
 
-import { Command, CommandError } from "nhandler";
+import { Command, ExecutionError } from "nhandler";
 import { MyClient } from "../index";
 
 // Define the TestCommand class. It implements the `Command` interface, which is imported from `nhandler`.
@@ -98,21 +98,21 @@ export class TestCommand implements Command {
     },
   ];
 
-  // This is our error method. It will be called when preconditions fail, or when the command returns a CommandError.
+  // This is our error method. It will be called when preconditions fail, or when the command returns a ExecutionError.
   // The error() method is an excellent way to keep your errors consistent in styling, as well as to shorten your code.
-  error(interaction: ChatInputCommandInteraction, error: CommandError): Promise<void> | void {
+  error(interaction: ChatInputCommandInteraction, error: ExecutionError): Promise<void> | void {
     interaction.reply({ content: "Error: " + error.message, ephemeral: true, });
     return;
   }
 
   // The run() method will be ran when the command is executed.
-  // It returns a Promise, which can be used to return a CommandError.
-  // If you return CommandError, `error()` will be called with the value.
+  // It returns a Promise, which can be used to return a ExecutionError.
+  // If you return ExecutionError, `error()` will be called with the value.
   // If you don't return anything (void), the command will be considered successful.
-  async run(interaction: ChatInputCommandInteraction): Promise<CommandError | void> {
+  async run(interaction: ChatInputCommandInteraction): Promise<ExecutionError | void> {
     if (1 === 2) {
-      // Throw a CommandError to call the error() method.
-      throw new CommandError("fatal error");
+      // Throw a ExecutionError to call the error() method.
+      throw new ExecutionError("fatal error");
     }
     // Successful: reply to the interaction and return nothing.
     await interaction.reply({ content: "Test command ran!", ephemeral: true });

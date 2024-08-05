@@ -1,11 +1,7 @@
 import { ApplicationCommandOptionType, LocalizationMap } from "discord-api-types/v10";
-import {
-	AutocompleteInteraction,
-	ChatInputCommandInteraction,
-	Client,
-} from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction, Client } from "discord.js";
 
-import { CommandError } from "../errors/CommandError";
+import { ExecutionError } from "../errors/ExecutionError";
 
 type SubcommandOptionTypesUnion =
 	| ApplicationCommandOptionType.Subcommand
@@ -96,9 +92,9 @@ export interface Command {
 	 * */
 	defaultMemberPermissions?: bigint;
 	/**
-	* integrationTypes - array of integration types that the command is allowed to be used in
-	* */
-	integrationTypes?: number[]
+	 * integrationTypes - array of integration types that the command is allowed to be used in
+	 * */
+	integrationTypes?: number[];
 	/**
 	 * contexts - array of contexts in which the command is allowed to be used
 	 * */
@@ -118,17 +114,17 @@ export interface Command {
 	 * this function will be called when an error occurs while executing the command,
 	 * for example an unauthorized user tries to use the command
 	 *
-	 * this will also be called if run() throws a CommandError
+	 * this will also be called if run() throws a ExecutionError
 	 *
 	 * this method should respond using interaction.respond()
 	 * */
-	error?: (interaction: ChatInputCommandInteraction, error: CommandError) => Promise<void> | void;
+	error?: (interaction: ChatInputCommandInteraction, error: ExecutionError) => Promise<void> | void;
 	/**
 	 * this function will be called when the command is successfully executed.
 	 *
 	 * this method should return a Promise<void>.
 	 *
-	 * if the command throws a CommandError, this.error will be called, otherwise (in case of returning void) the command will be considered successful
+	 * if the command throws a ExecutionError, this.error will be called, otherwise (in case of returning void) the command will be considered successful
 	 * */
 	run: (interaction: ChatInputCommandInteraction, metadata: any) => Promise<void>;
 }
