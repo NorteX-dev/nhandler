@@ -24,7 +24,7 @@ export interface LegacyCommand {
 	 * */
 	description: string;
 	/**
-	 * options - array of Command#CommandOption that specify the subcommands or arguments of the command
+	 * args - array of LegacyCommandArgument that specify the argument validators for this command
 	 * */
 	args?: LegacyCommandArgument[];
 	/**

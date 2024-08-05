@@ -73,6 +73,10 @@ importers:
       nhandler:
         specifier: workspace:^
         version: link:../handler
+    devDependencies:
+      discord-api-types:
+        specifier: ^0.37.84
+        version: 0.37.93
 
 packages:
 

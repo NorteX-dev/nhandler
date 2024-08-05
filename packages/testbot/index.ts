@@ -1,12 +1,23 @@
 import * as path from "path";
 import { Client, IntentsBitField } from "discord.js";
 import { config } from "dotenv";
-import { CommandHandler, ComponentHandler, createCommands, createComponents, createEvents, EventHandler } from "nhandler";
+import {
+	CommandHandler,
+	ComponentHandler,
+	createCommands,
+	createComponents,
+	createEvents,
+	createLegacyCommands,
+	EventHandler,
+	LegacyCommandHandler,
+} from "nhandler";
 
 import { PingCommand } from "./commands/ping";
 import { TestButtonPress } from "./components/testButtonPress";
 import { InteractionCreateEvent } from "./events/interactionCreate";
+import { MessageCreateEvent } from "./events/messageCreate";
 import { ReadyEvent } from "./events/ready";
+import { PingLegacyCommand } from "./legacy/ping";
 
 /*
  * This is the init file. Here you should define your handlers, we init all 3:
@@ -21,10 +32,15 @@ export class MyClient extends Client {
 	static commandHandler: CommandHandler;
 	static eventHandler: EventHandler;
 	static componentHandler: ComponentHandler;
+	static legacyCommandHandler: LegacyCommandHandler;
 
 	constructor() {
 		super({
-			intents: [IntentsBitField.Flags.Guilds, IntentsBitField.Flags.GuildMessages],
+			intents: [
+				IntentsBitField.Flags.Guilds,
+				IntentsBitField.Flags.GuildMessages,
+				IntentsBitField.Flags.MessageContent,
+			],
 		});
 
 		this.createHandlers();
@@ -42,9 +58,17 @@ export class MyClient extends Client {
 		// Init the eventHandler in similar fashion.
 		MyClient.eventHandler = createEvents<MyClient>({ client: this, debug: true })
 			.register(new ReadyEvent())
-			.register(new InteractionCreateEvent());
+			.register(new InteractionCreateEvent())
+			.register(new MessageCreateEvent());
 		// ...and the component handler...
-		MyClient.componentHandler = createComponents<MyClient>({ client: this, debug: true }).register(new TestButtonPress());
+		MyClient.componentHandler = createComponents<MyClient>({ client: this, debug: true }).register(
+			new TestButtonPress(),
+		);
+		MyClient.legacyCommandHandler = createLegacyCommands<MyClient>({
+			prefixes: ["!"],
+			client: this,
+			debug: true,
+		}).register(new PingLegacyCommand());
 	}
 }
 

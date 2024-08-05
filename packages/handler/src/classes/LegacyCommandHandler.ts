@@ -6,12 +6,17 @@ import { ExecutionError } from "../errors/ExecutionError";
 import { LegacyCommand, LegacyCommandArgument } from "../interfaces/LegacyCommand";
 import { BaseHandler } from "./BaseHandler";
 
+/*
+ * MAKE SURE TO ADD
+ * IntentsBitField.Flags.GuildMessages, IntentsBitField.Flags.MessageContent
+ * TO THE BITFIELD LIST
+ * */
 export class LegacyCommandHandler extends BaseHandler {
 	legacyCommands: LegacyCommand[] = [];
 	public prefixes: string[] = [];
 
-	constructor(prefixes: string[]) {
-		super();
+	constructor(prefixes: string[], debug?: (...args: any[]) => void) {
+		super(debug);
 		this.prefixes = prefixes;
 	}
 
@@ -92,7 +97,7 @@ export class LegacyCommandHandler extends BaseHandler {
 		this.prefixes = prefixes;
 	}
 
-	runLegacyCommand(event: Message, metadata: any = {}): void {
+	public runLegacyCommand(event: Message, metadata: any = {}): void {
 		if (!(event instanceof Message)) {
 			throw new Error("runLegacyCommand() only accepts Message as its first argument.");
 		}
@@ -100,7 +105,7 @@ export class LegacyCommandHandler extends BaseHandler {
 		const [commandNameWithPrefix, ...args] = event.content.split(" ");
 
 		const prefix = this.prefixes.find((prefix) => commandNameWithPrefix.startsWith(prefix));
-		if (!prefix) return this.debugLog(`runLegacyCommand(): No matching prefix found for ${commandNameWithPrefix}.`);
+		if (!prefix) return;
 		const commandName = commandNameWithPrefix.slice(prefix.length);
 
 		const command = this.legacyCommands.find((command) => command.name === commandName);

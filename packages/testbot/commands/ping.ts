@@ -1,5 +1,4 @@
-import { ButtonStyle } from "discord-api-types/v10";
-import { ActionRowBuilder, ButtonBuilder, ChatInputCommandInteraction } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ChatInputCommandInteraction } from "discord.js";
 import { Command, ExecutionError } from "nhandler";
 
 import { MyClient } from "../index";
@@ -15,8 +14,8 @@ export class PingCommand implements Command {
 
 	// The error method is called when a precondition fails, or when the command returns ExecutionError.
 	// You should handle the error by replying to the interaction with the error message.
-	error(interaction: ChatInputCommandInteraction, error: ExecutionError): Promise<void> | void {
-		interaction.reply({
+	async error(interaction: ChatInputCommandInteraction, error: ExecutionError): Promise<void> {
+		await interaction.reply({
 			content: "Error: " + error.message,
 			ephemeral: true,
 		});
@@ -24,7 +23,7 @@ export class PingCommand implements Command {
 	}
 
 	// The run callback is called when the command is ran.
-	async run(interaction: ChatInputCommandInteraction): Promise<ExecutionError | void> {
+	async run(interaction: ChatInputCommandInteraction): Promise<void> {
 		const thing = 1;
 
 		// @ts-expect-error
