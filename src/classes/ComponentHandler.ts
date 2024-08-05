@@ -76,11 +76,11 @@ export class ComponentHandler extends BaseHandler {
 			throw new Error("Component run() method must return a promise.");
 		}
 
-		promise.catch((cmpError) => {
-			if (!(cmpError instanceof ExecutionError)) {
-				throw cmpError;
+		promise.catch((execError) => {
+			if (!(execError instanceof ExecutionError)) {
+				throw execError;
 			}
-			this.callErrorIfPresent(component, event, cmpError);
+			this.callErrorIfPresent(component, event, execError);
 		});
 	}
 

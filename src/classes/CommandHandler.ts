@@ -99,11 +99,11 @@ export class CommandHandler extends BaseHandler {
 			throw new Error("Command run method must return a promise.");
 		}
 
-		promise.catch((cmdError) => {
-			if (!(cmdError instanceof ExecutionError)) {
-				throw cmdError;
+		promise.catch((execError) => {
+			if (!(execError instanceof ExecutionError)) {
+				throw execError;
 			}
-			this.callErrorIfPresent(command, event, cmdError);
+			this.callErrorIfPresent(command, event, execError);
 		});
 	}
 

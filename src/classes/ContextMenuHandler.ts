@@ -100,11 +100,11 @@ export class ContextMenuHandler extends BaseHandler {
 			throw new Error("Action run method must return a promise.");
 		}
 
-		promise.catch((actError) => {
-			if (!(actError instanceof ExecutionError)) {
-				throw actError;
+		promise.catch((execError) => {
+			if (!(execError instanceof ExecutionError)) {
+				throw execError;
 			}
-			this.callErrorIfPresent(action, event, actError);
+			this.callErrorIfPresent(action, event, execError);
 		});
 	}
 
