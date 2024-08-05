@@ -19,10 +19,10 @@ importers:
         specifier: ^9.0.7
         version: 9.0.7
       '@types/node':
-        specifier: ^20.11.20
-        version: 20.14.14
+        specifier: ^22.1.0
+        version: 22.1.0
       typescript:
-        specifier: ^5.3.3
+        specifier: ^5.5.4
         version: 5.5.4
 
   packages/handler:
@@ -41,14 +41,14 @@ importers:
         specifier: ^4.0.9
         version: 4.0.9
       '@types/node':
-        specifier: ^20.11.24
-        version: 20.14.14
+        specifier: ^22.1.0
+        version: 22.1.0
       discord-api-types:
         specifier: ^0.37.84
         version: 0.37.93
       dotenv:
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^16.4.5
+        version: 16.4.5
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -56,11 +56,23 @@ importers:
         specifier: ^3.0.3
         version: 3.3.3
       typescript:
-        specifier: ^5.3.2
-        version: 5.5.4
+        specifier: ^5.4.5
+        version: 5.4.5
       zod:
         specifier: ^3.22.4
         version: 3.23.8
+
+  packages/testbot:
+    dependencies:
+      discord.js:
+        specifier: ^14.13.0
+        version: 14.15.3
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      nhandler:
+        specifier: workspace:^
+        version: link:../handler
 
 packages:
 
@@ -274,9 +286,6 @@ packages:
   '@types/mute-stream@0.0.4':
     resolution: {integrity: sha512-CPM9nzrCPPJHQNA9keH9CVkVI+WR5kMa+7XEs5jcGQ0VoAGnLv242w8lIVgwAEfmE4oufJRaTc9PNLQl0ioAow==}
 
-  '@types/node@20.14.14':
-    resolution: {integrity: sha512-d64f00982fS9YoOgJkAMolK7MN8Iq3TDdVjchbYHdEmjth/DHowx82GnoA+tVUAN+7vxfYUgAzi+JXbKNd2SDQ==}
-
   '@types/node@22.1.0':
     resolution: {integrity: sha512-AOmuRF0R2/5j1knA3c6G3HOk523Ga+l+ZXltX8SF1+5oqcXijjfTd8fY3XRZqSihEu9XhtQnKYLmkFaoxgsJHw==}
 
@@ -378,9 +387,9 @@ packages:
     resolution: {integrity: sha512-/UJDQO10VuU6wQPglA4kz2bw2ngeeSbogiIPx/TsnctfzV/tNf+q+i1HlgtX1OGpeOBpJH9erZQNO5oRM2uAtQ==}
     engines: {node: '>=16.11.0'}
 
-  dotenv@10.0.0:
-    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
-    engines: {node: '>=10'}
+  dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
 
   electron-to-chromium@1.5.4:
     resolution: {integrity: sha512-orzA81VqLyIGUEA77YkVA1D+N+nNfl2isJVjjmOyrlxuooZ19ynb+dOlaDTqd/idKRS9lDCSBmtzM+kyCsMnkA==}
@@ -534,13 +543,15 @@ packages:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
 
+  typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
     hasBin: true
-
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   undici-types@6.13.0:
     resolution: {integrity: sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==}
@@ -895,11 +906,7 @@ snapshots:
 
   '@types/mute-stream@0.0.4':
     dependencies:
-      '@types/node': 20.14.14
-
-  '@types/node@20.14.14':
-    dependencies:
-      undici-types: 5.26.5
+      '@types/node': 22.1.0
 
   '@types/node@22.1.0':
     dependencies:
@@ -907,13 +914,13 @@ snapshots:
 
   '@types/through@0.0.33':
     dependencies:
-      '@types/node': 20.14.14
+      '@types/node': 22.1.0
 
   '@types/wrap-ansi@3.0.0': {}
 
   '@types/ws@8.5.12':
     dependencies:
-      '@types/node': 20.14.14
+      '@types/node': 22.1.0
 
   '@vladfrangu/async_event_emitter@2.4.5': {}
 
@@ -998,7 +1005,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  dotenv@10.0.0: {}
+  dotenv@16.4.5: {}
 
   electron-to-chromium@1.5.4: {}
 
@@ -1112,9 +1119,9 @@ snapshots:
 
   type-fest@0.21.3: {}
 
-  typescript@5.5.4: {}
+  typescript@5.4.5: {}
 
-  undici-types@5.26.5: {}
+  typescript@5.5.4: {}
 
   undici-types@6.13.0: {}
 
