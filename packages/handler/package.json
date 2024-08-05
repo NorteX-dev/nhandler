@@ -7,8 +7,8 @@
 	"scripts": {
 		"test": "nodemon examples/test/index.ts",
 		"build": "tsc",
-		"pub": "npm run build && npm publish",
-		"pub:dev": "npm run build && npm publish --tag \"dev\""
+		"pub": "pnpm run build && pnpm publish",
+		"pub:dev": "pnpm run build && pnpm publish --tag \"dev\""
 	},
 	"repository": "https://github.com/NorteX-dev/nhandler",
 	"keywords": [
