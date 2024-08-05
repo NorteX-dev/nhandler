@@ -1,19 +1,21 @@
 {
-  "name": "nbot-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "commander": "^12.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.20",
-    "typescript": "^5.3.3"
-  }
+	"name": "nbot-cli",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"commander": "^12.0.0",
+		"inquirer": "^10.1.7"
+	},
+	"devDependencies": {
+		"@types/inquirer": "^9.0.7",
+		"@types/node": "^20.11.20",
+		"typescript": "^5.3.3"
+	}
 }

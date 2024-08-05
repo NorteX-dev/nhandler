@@ -1,13 +1,13 @@
 {
 	"compilerOptions": {
-		"target": "ESNext",
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
+		"target": "ES2020",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"strict": true,
 		"outDir": "dist",
-		"checkJs": true,
 		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true
 	},
 	"exclude": ["node_modules"]
 }
