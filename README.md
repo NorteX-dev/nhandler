@@ -4,6 +4,9 @@ NHandler is an opinionated framework to help you with development of advanced Di
 
 It supports Discord.js version v14.14.1 and TypeScript v5.3.2.
 
+### Changelog v4.1
+- Added support for legacy (text, prefixed) commands.
+
 ### Changelog v3 to v4
 
 - Consolidated CommandError and ComponentError into a single error: ExecutionError. This was done because it was too easy to throw a CommandError in a component class, and therefore the error was not caught by the command handler.
