@@ -113,10 +113,10 @@ export class LegacyCommandHandler extends BaseHandler {
 		this.debugLog(`Running legacy command ${command.name}.`);
 
 		const error = this.checkConditionals(event, command);
-		const error2 = this.validateArgs(args, command.args || []);
+		// const error2 = this.validateArgs(args, command.args || []);
 
-		if (error || error2) {
-			this.callErrorIfPresent(command, args, event, (error || error2)!);
+		if (error /*|| error2*/) {
+			this.callErrorIfPresent(command, args, event, error /* || error2*/!);
 			return;
 		}
 
