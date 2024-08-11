@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 
 import { generateCommand } from "./commands/generate";
@@ -8,7 +9,7 @@ const program = new Command();
 program
 	.name("nhandler")
 	.description("The nhandler command line utility for initalizing projects and generating new modules.")
-	.version("0.1.0");
+	.version("1.0.0");
 
 initCommand(program);
 generateCommand(program);
