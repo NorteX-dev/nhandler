@@ -10,11 +10,11 @@ export interface LegacyCommandArgument {
 	spread?: boolean;
 }
 
-export interface LegacyCommand {
+export interface LegacyCommand<T = Client> {
 	/**
 	 * client - the client that the command is registered to
 	 * */
-	client: Client;
+	client: T;
 	/**
 	 * name - defines the name of the command
 	 * */

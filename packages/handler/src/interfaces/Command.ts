@@ -46,11 +46,11 @@ export type ArgumentOption = {
 };
 export type CommandOption = SubcommandWithOptions | ArgumentOption;
 
-export interface Command {
+export interface Command<T = Client> {
 	/**
 	 * client - the client that the command is registered to
 	 * */
-	client: Client;
+	client: T;
 	/**
 	 * name - defines the name of the command
 	 * */

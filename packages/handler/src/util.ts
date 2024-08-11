@@ -3,6 +3,7 @@ import {
 	ButtonInteraction,
 	ChannelSelectMenuInteraction,
 	ChatInputCommandInteraction,
+	Client,
 	MentionableSelectMenuInteraction,
 	MessageContextMenuCommandInteraction,
 	ModalSubmitInteraction,
@@ -11,6 +12,9 @@ import {
 	UserContextMenuCommandInteraction,
 	UserSelectMenuInteraction,
 } from "discord.js";
+
+import { ExecutionError } from "./errors/ExecutionError";
+import { Command } from "./interfaces/Command";
 
 export type AnyComponentInteraction =
 	| ButtonInteraction

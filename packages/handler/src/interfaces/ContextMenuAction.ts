@@ -4,11 +4,11 @@ import { Client } from "discord.js";
 import { ExecutionError } from "../errors/ExecutionError";
 import { ContextMenuInteraction } from "../util";
 
-export interface ContextMenuAction {
+export interface ContextMenuAction<T = Client> {
 	/**
 	 * client - the client that the command is registered to
 	 * */
-	client: Client;
+	client: T;
 	/**
 	 * name - defines the name of the command
 	 * */

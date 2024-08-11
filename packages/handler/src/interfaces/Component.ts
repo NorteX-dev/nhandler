@@ -3,11 +3,11 @@ import { Client } from "discord.js";
 import { ExecutionError } from "../errors/ExecutionError";
 import { AnyComponentInteraction } from "../util";
 
-export interface Component {
+export interface Component<T = Client> {
 	/**
 	 * client - the client that the command is registered to
 	 * */
-	client: Client;
+	client: T;
 	/**
 	 * customId - the custom id property of the component
 	 * */

@@ -1,10 +1,10 @@
 import { Client } from "discord.js";
 
-export interface Event {
+export interface Event<T = Client> {
 	/**
 	 * client - the client that the command is registered to
 	 * */
-	client: Client;
+	client: T;
 	/**
 	 * name - name of the event
 	 * */
