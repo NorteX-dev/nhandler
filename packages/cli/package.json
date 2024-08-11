@@ -1,6 +1,6 @@
 {
 	"name": "nhandler-cli",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A CLI utility for initializing nhandler projects & adding modules to them.",
 	"main": "./dist/index.js",
 	"scripts": {
