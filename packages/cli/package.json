@@ -1,19 +1,24 @@
 {
-  "name": "nbot-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "commander": "^12.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.20",
-    "typescript": "^5.3.3"
-  }
+	"name": "nhandler-cli",
+	"version": "1.0.1",
+	"description": "A CLI utility for initializing nhandler projects & adding modules to them.",
+	"main": "./dist/index.js",
+	"scripts": {
+		"build": "esbuild --bundle src/index.ts --outdir=dist --platform=node --minify"
+	},
+	"bin": {
+		"nhandler": "./dist/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@inquirer/prompts": "^5.3.8",
+		"commander": "^12.0.0"
+	},
+	"devDependencies": {
+		"@types/inquirer": "^9.0.7",
+		"@types/node": "^22.1.0",
+		"typescript": "^5.5.4"
+	}
 }

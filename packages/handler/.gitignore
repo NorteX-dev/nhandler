@@ -1,0 +1,12 @@
+node_modules
+dist
+.idea
+*.iml
+lib
+gen
+TODO.md
+examples/**/.env
+examples/**/node_modules
+examples/**/pnpm-lock.yaml
+docs/node_modules
+examples/test
