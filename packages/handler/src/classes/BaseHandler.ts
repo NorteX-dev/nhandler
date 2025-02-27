@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import EventEmitter from "node:events";
 import { Client } from "discord.js";
 
 export let commandsToRegister: any[] = [];

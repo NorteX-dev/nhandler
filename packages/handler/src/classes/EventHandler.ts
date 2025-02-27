@@ -7,11 +7,13 @@ import { BaseHandler } from "./BaseHandler";
 export class EventHandler extends BaseHandler {
 	events: Event[] = [];
 
-	register(event: Event): EventHandler {
-		this.debugLog(`Registered event ${event.name}.`);
-		event.client = this.client;
-		this.client[event.once ? "once" : "on"](event.name, (...args) => event.run(...args));
-		this.events.push(event);
+	register(...events: Event[]): EventHandler {
+		for (const event of events) {
+			this.debugLog(`Registered event ${event.name}.`);
+			event.client = this.client;
+			this.client[event.once ? "once" : "on"](event.name, (...args) => event.run(...args));
+			this.events.push(event);
+		}
 		return this;
 	}
 

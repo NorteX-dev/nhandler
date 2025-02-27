@@ -14,14 +14,16 @@ export class CommandHandler extends BaseHandler {
 		return this.commands.some((command) => command.name === name);
 	}
 
-	public register(command: Command): CommandHandler {
-		if (this.commandExists(command.name))
-			throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
-		this.debugLog(`Registered command ${command.name}.`);
-		command.client = this.client;
-		commandsToRegister.push(CommandHandler.commandMapper(command));
-		this.commands.push(command);
-		this.emit("commandRegistered", command);
+	public register(...commands: Command[]): CommandHandler {
+		for(const command of commands) {
+			if (this.commandExists(command.name))
+				throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
+			this.debugLog(`Registered command ${command.name}.`);
+			command.client = this.client;
+			commandsToRegister.push(CommandHandler.commandMapper(command));
+			this.commands.push(command);
+			this.emit("commandRegistered", command);
+		}
 		return this;
 	}
 

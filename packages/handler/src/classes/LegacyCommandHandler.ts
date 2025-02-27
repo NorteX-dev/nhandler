@@ -24,13 +24,15 @@ export class LegacyCommandHandler extends BaseHandler {
 		return this.legacyCommands.some((command) => command.name === name);
 	}
 
-	public register(command: LegacyCommand): LegacyCommandHandler {
-		if (this.commandExists(command.name))
-			throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
-		this.debugLog(`Registered command ${command.name}.`);
-		command.client = this.client;
-		this.legacyCommands.push(command);
-		this.emit("commandRegistered", command);
+	public register(...commands: LegacyCommand[]): LegacyCommandHandler {
+		for (const command of commands) {
+			if (this.commandExists(command.name))
+				throw new Error(`Cannot register command with duplicate name: '${command.name}'.`);
+			this.debugLog(`Registered command ${command.name}.`);
+			command.client = this.client;
+			this.legacyCommands.push(command);
+			this.emit("commandRegistered", command);
+		}
 		return this;
 	}
 

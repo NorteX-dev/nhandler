@@ -13,16 +13,18 @@ export class ContextMenuHandler extends BaseHandler {
 		return this.actions.some((action) => action.name === name && action.type === type);
 	}
 
-	register(action: ContextMenuAction): ContextMenuHandler {
-		if (this.actionExists(action.name, action.type))
-			throw new Error(
-				`Cannot register context menu action with duplicate name and type: '${action.name}', type '${action.type}'.`,
-			);
-		this.debugLog(`Registered context menu action ${action.name}.`);
-		action.client = this.client;
-		commandsToRegister.push(ContextMenuHandler.actionMapper(action));
-		this.actions.push(action);
-		this.emit("actionRegistered", action);
+	register(...actions: ContextMenuAction[]): ContextMenuHandler {
+		for (const action of actions) {
+			if (this.actionExists(action.name, action.type))
+				throw new Error(
+					`Cannot register context menu action with duplicate name and type: '${action.name}', type '${action.type}'.`,
+				);
+			this.debugLog(`Registered context menu action ${action.name}.`);
+			action.client = this.client;
+			commandsToRegister.push(ContextMenuHandler.actionMapper(action));
+			this.actions.push(action);
+			this.emit("actionRegistered", action);
+		}
 		return this;
 	}
 

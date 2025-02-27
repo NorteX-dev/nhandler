@@ -13,12 +13,14 @@ export class ComponentHandler extends BaseHandler {
 		return this.components.some((cmp) => cmp.customId === name);
 	}
 
-	public register(component: Component): ComponentHandler {
-		if (this.componentExists(component.customId))
-			throw new Error(`Cannot register component with duplicate customId: '${component.customId}'.`);
-		this.debugLog(`Registered component ${component.customId}.`);
-		component.client = this.client;
-		this.components.push(component);
+	public register(...components: Component[]): ComponentHandler {
+		for (const component of components) {
+			if (this.componentExists(component.customId))
+				throw new Error(`Cannot register component with duplicate customId: '${component.customId}'.`);
+			this.debugLog(`Registered component ${component.customId}.`);
+			component.client = this.client;
+			this.components.push(component);
+		}
 		return this;
 	}
 
